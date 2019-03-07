@@ -7,10 +7,26 @@
     tools:context=".Activities.CalendarActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/moreActivities_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
+        android:text="More Activities"
+        tools:layout_editor_absoluteX="16dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+    <Button
+        android:id="@+id/addevents_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Events"
         tools:layout_editor_absoluteX="306dp"
-        tools:layout_editor_absoluteY="40dp" />
+        tools:layout_editor_absoluteY="651dp" />
+
+    <Button
+        android:id="@+id/messages_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Messages"
+        tools:layout_editor_absoluteX="305dp"
+        tools:layout_editor_absoluteY="16dp" />
 </android.support.constraint.ConstraintLayout>
