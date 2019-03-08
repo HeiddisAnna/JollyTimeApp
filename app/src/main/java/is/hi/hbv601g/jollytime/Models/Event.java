@@ -1,17 +1,17 @@
 package is.hi.hbv601g.jollytime.Models;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class Event {
 
     private String title;
     private String description;
-    private Date startTime;
-    private Date endTime;
+    private GregorianCalendar startTime;
+    private GregorianCalendar endTime;
     private ArrayList<User> friends;
     //private accepted
 
-    public Event(String title, String description, Date startTime, Date endTime, ArrayList<User> friends) {
+    public Event(String title, String description, GregorianCalendar startTime, GregorianCalendar endTime, ArrayList<User> friends) {
         this.title = title;
         this.description = description;
         this.startTime = startTime;
@@ -27,11 +27,11 @@ public class Event {
         return description;
     }
 
-    public Date getStartTime() {
+    public GregorianCalendar getStartTime() {
         return startTime;
     }
 
-    public Date getEndTime() {
+    public GregorianCalendar getEndTime() {
         return endTime;
     }
 
