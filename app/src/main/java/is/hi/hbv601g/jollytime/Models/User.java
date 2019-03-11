@@ -1,7 +1,9 @@
 package is.hi.hbv601g.jollytime.Models;
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class User {
+@SuppressWarnings("serial")
+public class User implements Serializable {
     private String name;
     private String password;
     private String email;

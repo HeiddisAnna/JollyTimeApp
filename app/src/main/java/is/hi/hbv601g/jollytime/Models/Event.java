@@ -1,8 +1,10 @@
 package is.hi.hbv601g.jollytime.Models;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
+import java.io.Serializable;
 
-public class Event {
+@SuppressWarnings("serial")
+public class Event implements Serializable {
 
     private String title;
     private String description;

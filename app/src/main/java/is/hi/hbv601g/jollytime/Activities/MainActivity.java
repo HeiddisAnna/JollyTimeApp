@@ -1,10 +1,12 @@
 package is.hi.hbv601g.jollytime.Activities;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -21,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private String password;
 
     private Button mSignInButton;
+    private Button mCreateAccountButton;
     private EditText mEmailInput;
     private EditText mPasswordInput;
 
@@ -75,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mSignInButton = (Button) findViewById(R.id.signin_button);
+        mCreateAccountButton = (Button) findViewById(R.id.createaccount_button);
         mEmailInput = (EditText) findViewById(R.id.email_input);
         mPasswordInput = (EditText) findViewById(R.id.password_input);
 
@@ -83,11 +87,33 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 email = mEmailInput.getText().toString();
                 password = mPasswordInput.getText().toString();
+
+                Intent i = new Intent(MainActivity.this, CalendarActivity.class);
+                startActivity(i);
             }
         });
 
+        mCreateAccountButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Intent i = CreateAccountActivity.newIntent(MainActivity.this);
+                Intent i = new Intent(MainActivity.this, CreateAccountActivity.class);
+                i.putExtra("USERS", mUsersBank);
+                startActivity(i);
+            }
+        });
 
     }
+/*
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent i) {
+
+        if (i.getExtras().getBoolean("accountCreated")) {
+            Toast.makeText(MainActivity.this, R.string.account_created,
+                    Toast.LENGTH_LONG).show();
+        }
+    }
+    */
 
 
 }
