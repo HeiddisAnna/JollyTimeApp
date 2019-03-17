@@ -25,7 +25,7 @@ public class CreateAccount {
     // else false
     public Boolean checkIfEmailExists(ArrayList<User> users) {
         for (int i=0; i<users.size(); i++) {
-            if (users.get(i).getEmail() == email) return true;
+            if (users.get(i).getEmail().equals(email)) return true;
         }
         return false;
     }
@@ -33,7 +33,7 @@ public class CreateAccount {
     // returns true if password1 == password2
     // else false
     public Boolean checkIfPasswordsMatch() {
-        return (password1 == password2);
+        return (password1.equals(password2));
     }
 
     public void CreateUser(ArrayList<User> users) {

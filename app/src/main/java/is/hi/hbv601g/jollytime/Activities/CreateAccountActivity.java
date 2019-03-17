@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import is.hi.hbv601g.jollytime.Models.Event;
+import is.hi.hbv601g.jollytime.Models.Notification;
 import is.hi.hbv601g.jollytime.Models.User;
 import is.hi.hbv601g.jollytime.Services.CreateAccount;
 
@@ -33,6 +35,7 @@ public class CreateAccountActivity extends AppCompatActivity {
     private Button mCreateAccountButton;
 
     private CreateAccount createAccountService;
+    private ArrayList<User> users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +55,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         password2 = mPassword2.getText().toString();
 
         final Intent i = getIntent();
-        final ArrayList<User> users = (ArrayList<User>) i.getSerializableExtra("USERS");
+        users = (ArrayList<User>) i.getSerializableExtra("USERS");
 
 
         mCreateAccountButton.setOnClickListener(new View.OnClickListener() {
@@ -75,14 +78,12 @@ public class CreateAccountActivity extends AppCompatActivity {
                     // annars fer aftur til baka í sign in
                     i.putExtra("accountCreated", true);
                     setResult(RESULT_OK, i);
+                    users.add(new User(name, password1, email, new ArrayList<Event>(), new ArrayList<Event>(),
+                            new ArrayList<User>(), new ArrayList<Notification>()));
                     finish();
                 }
-
-
             }
 
         });
-
-
     }
 }

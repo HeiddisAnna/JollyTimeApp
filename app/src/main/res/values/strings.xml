@@ -3,4 +3,5 @@
     <string name="email_exists">An account for this email already exists</string>
     <string name="passwords_not_matching">Passwords need to match</string>
     <string name="account_created">Your account has been created!</string>
+    <string name="authentication_failed">Email or password is wrong</string>
 </resources>

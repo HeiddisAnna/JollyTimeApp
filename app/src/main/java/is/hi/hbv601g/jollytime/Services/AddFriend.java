@@ -1,6 +1,7 @@
 package is.hi.hbv601g.jollytime.Services;
 
 public class AddFriend {
+    /*
     private String name;
     private String password;
     private String email;
@@ -8,6 +9,7 @@ public class AddFriend {
     private ArrayList<Event> dates;
     private ArrayList<User> friends;
     private ArrayList<Notification> notifications;
+    */
 }
 
 
