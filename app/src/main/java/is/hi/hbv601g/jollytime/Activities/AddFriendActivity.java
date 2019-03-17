@@ -22,6 +22,6 @@ public class AddFriendActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_friend);
 
 
-        mAddFriendButton = (Button) findViewById(R.id.addFriend_button);
+        //mAddFriendButton = (Button) findViewById(R.id.addFriend_button);
     }
 }

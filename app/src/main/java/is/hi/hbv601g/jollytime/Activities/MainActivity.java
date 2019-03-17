@@ -9,11 +9,13 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import is.hi.hbv601g.jollytime.Models.User;
 import is.hi.hbv601g.jollytime.Models.Event;
 import is.hi.hbv601g.jollytime.Models.Notification;
+import is.hi.hbv601g.jollytime.Services.SignIn;
 //import is.hi.hbv601g.jollytime.R;
 
 
@@ -88,8 +90,17 @@ public class MainActivity extends AppCompatActivity {
                 email = mEmailInput.getText().toString();
                 password = mPasswordInput.getText().toString();
 
-                Intent i = new Intent(MainActivity.this, CalendarActivity.class);
-                startActivity(i);
+
+                SignIn signInService = new SignIn(email, password);
+
+                if (signInService.doesPasswordMatchEmail(mUsersBank)) {
+                    Intent i = new Intent(MainActivity.this, CalendarActivity.class);
+
+                    startActivity(i);
+                } else {
+                    Toast.makeText(MainActivity.this, R.string.authentication_failed,
+                            Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -97,10 +108,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 //Intent i = CreateAccountActivity.newIntent(MainActivity.this);
+
                 Intent i = new Intent(MainActivity.this, CreateAccountActivity.class);
                 i.putExtra("USERS", mUsersBank);
                 startActivity(i);
             }
+
+
         });
 
     }
