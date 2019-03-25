@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 public class DayActivity extends AppCompatActivity {
@@ -14,12 +15,18 @@ public class DayActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_day);
 
-        TextView dateTextView = findViewById(R.id.dateTextView);
-        Button backToCalendarButton = findViewById(R.id.backToCalendarButton);
+        TextView dateTextView = findViewById(R.id.date_DayTextView);
+        TextView yearTextView = findViewById(R.id.year_dayTextView);
+        ImageButton backToCalendarButton = findViewById(R.id.backToCalendarButton);
 
         String date = getIntent().getStringExtra("date");
+        String year = getIntent().getStringExtra("year");
+
         if(date!= null) {
             dateTextView.setText(date);
+        }
+        if(year!= null) {
+            yearTextView.setText(year);
         }
 
         backToCalendarButton.setOnClickListener(new View.OnClickListener() {
