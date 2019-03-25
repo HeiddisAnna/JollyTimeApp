@@ -26,8 +26,8 @@
         android:layout_marginBottom="24dp"
         android:background="@drawable/circle_button"
         android:text="+"
-        android:textSize="30dp"
         android:textColor="@color/colorWhite"
+        android:textSize="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

@@ -95,6 +95,7 @@ public class CalendarActivity extends AppCompatActivity {
         Button goToDay_button = findViewById(R.id.go_to_date_button);
         final TextView yearText = findViewById(R.id.year_textView);
         final TextView dateText = findViewById(R.id.date_textView);
+        Button addevents_button = findViewById(R.id.addevents_button);
 
         final String year = String.valueOf(cal.get(Calendar.YEAR));
         String dayOfWeek;
@@ -129,10 +130,22 @@ public class CalendarActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(CalendarActivity.this, DayActivity.class);
+                //intent.putExtra("date", selectedDate);
+                //intent.putExtra("year", year);
+                startActivity(intent);
+            }
+        });
+
+        addevents_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(CalendarActivity.this, CreateEventActivity.class);
                 intent.putExtra("date", selectedDate);
                 intent.putExtra("year", year);
                 startActivity(intent);
             }
         });
+
+
     }
 }
