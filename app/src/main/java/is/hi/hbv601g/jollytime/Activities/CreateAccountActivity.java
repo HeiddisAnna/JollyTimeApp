@@ -1,7 +1,5 @@
 package is.hi.hbv601g.jollytime.Activities;
 
-import android.content.Context;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -9,22 +7,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
-import is.hi.hbv601g.jollytime.Models.Event;
-import is.hi.hbv601g.jollytime.Models.Notification;
-import is.hi.hbv601g.jollytime.Models.User;
-import is.hi.hbv601g.jollytime.Services.CreateAccount;
+import is.hi.hbv601g.jollytime.FirebaseServices.Authentication;
+import is.hi.hbv601g.jollytime.Services.UserService;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
     private static final String USERS = "is.hi.hbv601g.jollytime.users";
 
-    public static Intent newIntent(Context packageContext) {
-        Intent i = new Intent(packageContext, CreateAccountActivity.class);
-        //i.putExtra(USERS, users);
-        return i;
-    }
+
+    private Authentication authenticationService;
+    private UserService userService;
 
 
     private String name;
@@ -32,58 +24,79 @@ public class CreateAccountActivity extends AppCompatActivity {
     private String password1;
     private String password2;
 
+    private EditText mName;
+    private EditText mEmail;
+    private EditText mPassword1;
+    private EditText mPassword2;
+
     private Button mCreateAccountButton;
 
-    private CreateAccount createAccountService;
-    private ArrayList<User> users;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
+        authenticationService = new Authentication();
 
         mCreateAccountButton = (Button) findViewById(R.id.create_button);
-        EditText mName = (EditText) findViewById(R.id.name_input);
-        EditText mEmail = (EditText) findViewById(R.id.email_input);
-        EditText mPassword1 = (EditText) findViewById(R.id.password1_input);
-        EditText mPassword2 = (EditText) findViewById(R.id.password2_input);
-
-        name = mName.getText().toString();
-        email = mEmail.getText().toString();
-        password1 = mPassword1.getText().toString();
-        password2 = mPassword2.getText().toString();
-
-        final Intent i = getIntent();
-        users = (ArrayList<User>) i.getSerializableExtra("USERS");
-
 
         mCreateAccountButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
+                mName = (EditText) findViewById(R.id.name_input);
+                mEmail = (EditText) findViewById(R.id.email_input);
+                mPassword1 = (EditText) findViewById(R.id.password1_input);
+                mPassword2 = (EditText) findViewById(R.id.password2_input);
 
+                name = mName.getText().toString();
+                email = mEmail.getText().toString();
+                password1 = mPassword1.getText().toString();
+                password2 = mPassword2.getText().toString();
 
-                createAccountService = new CreateAccount(name, email, password1, password2);
-                if (createAccountService.checkIfEmailExists(users)) {
-                    // email er til
-                    Toast.makeText(CreateAccountActivity.this, R.string.email_exists,
-                            Toast.LENGTH_LONG).show();
-                }
-                else if (!createAccountService.checkIfPasswordsMatch()) {
-                    // password matcha ekki
-                    Toast.makeText(CreateAccountActivity.this, R.string.passwords_not_matching,
-                            Toast.LENGTH_LONG).show();
+                userService = new UserService(email, name, password1, password2);
+
+                if (userService.isNameEmpty()) {
+
+                    Toast.makeText(CreateAccountActivity.this, "Name cannot be empty",
+                            Toast.LENGTH_SHORT).show();
+
+                } else if (userService.isEmailEmpty()) {
+
+                    Toast.makeText(CreateAccountActivity.this, "Email cannot be empty",
+                            Toast.LENGTH_SHORT).show();
+
+                } else if (userService.isEitherPasswordEmpty()) {
+
+                    Toast.makeText(CreateAccountActivity.this, "Password cannot be empty",
+                            Toast.LENGTH_SHORT).show();
+
+                } else  if (!userService.doPasswordsMatch()) {
+
+                    Toast.makeText(CreateAccountActivity.this, "Passwords do not match",
+                            Toast.LENGTH_SHORT).show();
+
                 } else {
-                    // annars fer aftur til baka í sign in
-                    i.putExtra("accountCreated", true);
-                    setResult(RESULT_OK, i);
-                    users.add(new User(name, password1, email, new ArrayList<Event>(), new ArrayList<Event>(),
-                            new ArrayList<User>(), new ArrayList<Notification>()));
-                    finish();
+
+                    Boolean check = authenticationService.createAccount(email, password1);
+
+                    if (check) {
+                        finish();
+                    } else {
+                        Toast.makeText(CreateAccountActivity.this, "Authentication failed.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+
                 }
+
             }
 
         });
     }
+
+
+
+
+
 }

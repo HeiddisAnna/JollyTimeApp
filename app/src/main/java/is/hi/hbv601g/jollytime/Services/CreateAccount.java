@@ -2,6 +2,7 @@ package is.hi.hbv601g.jollytime.Services;
 
 import java.util.ArrayList;
 
+import is.hi.hbv601g.jollytime.Models.Date;
 import is.hi.hbv601g.jollytime.Models.Event;
 import is.hi.hbv601g.jollytime.Models.Notification;
 import is.hi.hbv601g.jollytime.Models.User;
@@ -38,7 +39,7 @@ public class CreateAccount {
 
     public void CreateUser(ArrayList<User> users) {
         users.add(new User(name, password1, email,
-                new ArrayList<Event>(), new ArrayList<Event>(), new ArrayList<User>(),
+                new ArrayList<Event>(), new ArrayList<Date>(), new ArrayList<User>(),
                 new ArrayList<Notification>()));
     }
 }

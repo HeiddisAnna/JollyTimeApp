@@ -1,19 +1,32 @@
 package is.hi.hbv601g.jollytime.Models;
-import java.util.ArrayList;
 import java.io.Serializable;
+import java.util.List;
+
 
 @SuppressWarnings("serial")
+
 public class User implements Serializable {
+
+    private long id;
+
     private String name;
     private String password;
     private String email;
-    private ArrayList<Event> events;
-    private ArrayList<Event> dates;
-    private ArrayList<User> friends;
-    private ArrayList<Notification> notifications;
 
-    public User(String name, String password, String email, ArrayList<Event> events, ArrayList<Event> dates,
-                ArrayList<User> friends, ArrayList<Notification> notifications) {
+    private List<Event> events;
+
+
+    private List<Date> dates;
+
+    private List<User> friends;
+
+
+    private List<Notification> notifications;
+
+    public User() {}
+
+    public User(String name, String password, String email, List<Event> events, List<Date> dates,
+                List<User> friends, List<Notification> notifications) {
         this.name = name;
         this.password = password;
         this.email = email;
@@ -22,6 +35,14 @@ public class User implements Serializable {
         this.friends = friends;
         this.notifications = notifications;
 
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -36,7 +57,8 @@ public class User implements Serializable {
         return password;
     }
 
-    public ArrayList<Event> getEvents() {
+
+    public List<Event> getEvents() {
         return events;
     }
 
@@ -44,15 +66,15 @@ public class User implements Serializable {
         events.add(event);
     }
 
-    public ArrayList<Event> getDates() {
+    public List<Date> getDates() {
         return dates;
     }
 
-    public void addDate(Event date) {
+    public void addDate(Date date) {
         dates.add(date);
     }
 
-    public ArrayList<User> getFriends() {
+    public List<User> getFriends() {
         return friends;
     }
 
@@ -60,11 +82,12 @@ public class User implements Serializable {
         friends.add(friend);
     }
 
-    public ArrayList<Notification> getNotifications() {
+    public List<Notification> getNotifications() {
         return notifications;
     }
 
     public void addNotification(Notification notification) {
         notifications.add(notification);
     }
+
 }
