@@ -1,12 +1,10 @@
 package is.hi.hbv601g.jollytime.Models;
-import android.support.annotation.IdRes;
 
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
-import java.io.Serializable;
+import java.util.List;
 
 
-public class Event implements Serializable {
+public class Date {
 
     public long id;
     private String title;
@@ -14,22 +12,17 @@ public class Event implements Serializable {
     private GregorianCalendar startTime;
     private GregorianCalendar endTime;
 
+    private List<User> user;
 
-    private User user;
-    //private accepted
+    public Date() {}
 
-    public Event() {}
-
-    public Event(String title, String description,
-                 GregorianCalendar startTime, GregorianCalendar endTime,
-                 User user) {
+    public Date(String title, String description, GregorianCalendar startTime, GregorianCalendar endTime) {
         this.title = title;
         this.description = description;
         this.startTime = startTime;
         this.endTime = endTime;
-        this.user = user;
-    }
 
+    }
 
     public Long getId() {
         return id;
@@ -54,5 +47,4 @@ public class Event implements Serializable {
     public GregorianCalendar getEndTime() {
         return endTime;
     }
-
 }
