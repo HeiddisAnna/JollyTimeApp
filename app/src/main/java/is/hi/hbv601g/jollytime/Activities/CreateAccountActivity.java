@@ -37,7 +37,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
-        authenticationService = new Authentication();
+        authenticationService = new Authentication(this);
 
         mCreateAccountButton = (Button) findViewById(R.id.create_button);
 
@@ -79,20 +79,19 @@ public class CreateAccountActivity extends AppCompatActivity {
 
                 } else {
 
-                    Boolean check = authenticationService.createAccount(email, password1);
-
-                    if (check) {
-                        finish();
-                    } else {
-                        Toast.makeText(CreateAccountActivity.this, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show();
-                    }
-
+                    authenticationService.createAccount(email, password1);
                 }
-
             }
-
         });
+    }
+
+    public void onCreatingAccountSuccessfully() {
+        finish();
+    }
+
+    public void onCreatingAccountFailure() {
+        Toast.makeText(CreateAccountActivity.this, "Authentication failed.",
+                Toast.LENGTH_SHORT).show();
     }
 
 

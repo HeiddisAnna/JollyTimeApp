@@ -9,9 +9,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
+import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import is.hi.hbv601g.jollytime.FirebaseServices.Authentication;
 
 public class CalendarActivity extends AppCompatActivity {
+
+    private Button mSignOutButton;
+    private Authentication authenticationService;
 
     private String getDayOfWeek(int value) {
         String day = "";
@@ -90,6 +97,10 @@ public class CalendarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
+        authenticationService = new Authentication();
+
+        mSignOutButton = (Button) findViewById(R.id.sign_out_button);
+
         CalendarView calendarView = findViewById(R.id.calendarView);
         Calendar cal = Calendar.getInstance();
         Button goToDay_button = findViewById(R.id.go_to_date_button);
@@ -143,6 +154,14 @@ public class CalendarActivity extends AppCompatActivity {
                 intent.putExtra("date", selectedDate);
                 intent.putExtra("year", year);
                 startActivity(intent);
+            }
+        });
+
+        mSignOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                authenticationService.signOut();
+                finish();
             }
         });
 

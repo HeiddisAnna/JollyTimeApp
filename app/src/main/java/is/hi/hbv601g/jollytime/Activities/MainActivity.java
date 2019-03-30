@@ -83,28 +83,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        authenticationService = new Authentication();
+        authenticationService = new Authentication(this);
 
         mSignInButton = (Button) findViewById(R.id.signin_button);
         mCreateAccountButton = (Button) findViewById(R.id.createaccount_button);
-        mEmailInput = (EditText) findViewById(R.id.email_input);
-        mPasswordInput = (EditText) findViewById(R.id.password_input);
-
-        email = mEmailInput.getText().toString();
-        password = mPasswordInput.getText().toString();
 
         mSignInButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                mEmailInput = (EditText) findViewById(R.id.email_input);
+                mPasswordInput = (EditText) findViewById(R.id.password_input);
 
-                Boolean check = authenticationService.signIn(email, password);
-                if (check) {
-                    Intent i = new Intent(MainActivity.this, CalendarActivity.class);
-                    startActivity(i);
-                } else {
-                    Toast.makeText(MainActivity.this, "Authentication failed.",
-                            Toast.LENGTH_SHORT).show();
-                }
+                email = mEmailInput.getText().toString();
+                password = mPasswordInput.getText().toString();
+
+                authenticationService.signIn(email, password);
             }
         });
 
@@ -117,14 +110,27 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void onAuthenticationSuccess() {
+        Intent i = new Intent(MainActivity.this, CalendarActivity.class);
+        startActivity(i);
+    }
+
+    public void onAuthenticationFail() {
+        Toast.makeText(MainActivity.this, "Authentication failed.",
+                Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public void onStart() {
         super.onStart();
+
         Boolean check = authenticationService.isUserLoggedIn();
         if (check) {
             Intent i = new Intent(MainActivity.this, CalendarActivity.class);
             startActivity(i);
         }
+
+
     }
 
 
