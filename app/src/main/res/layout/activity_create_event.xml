@@ -100,7 +100,7 @@
                 android:layout_marginBottom="8dp"
                 android:text="Start date"
                 app:layout_constraintBottom_toTopOf="@+id/endDate_Text"
-                app:layout_constraintEnd_toStartOf="@+id/starTimePicker"
+                app:layout_constraintEnd_toStartOf="@+id/startDatePicker"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent" />
 
@@ -112,7 +112,7 @@
 
 
                 <DatePicker
-                    android:id="@+id/starTimePicker"
+                    android:id="@+id/startDatePicker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
@@ -131,7 +131,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/datePicker1" />
 
                 <TimePicker
-                    android:id="@+id/datePicker1"
+                    android:id="@+id/startTimePicker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:timePickerMode="spinner" />
@@ -174,13 +174,13 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.623"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/starTimePicker" />/
+                    app:layout_constraintTop_toBottomOf="@+id/startDatePicker" />/
                 app:layout_constraintBottom_toTopOf="@+id/starDatePicker"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/description_input" />
 
                 <TimePicker
-                    android:id="@+id/datePicker1"
+                    android:id="@+id/endTimePicker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:timePickerMode="spinner" />
