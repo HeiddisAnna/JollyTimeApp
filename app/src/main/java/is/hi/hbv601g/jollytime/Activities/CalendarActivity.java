@@ -9,16 +9,14 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CalendarView;
-import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import is.hi.hbv601g.jollytime.FirebaseServices.Authentication;
+import is.hi.hbv601g.jollytime.FirebaseServices.AuthenticationService;
 
 public class CalendarActivity extends AppCompatActivity {
 
     private Button mSignOutButton;
-    private Authentication authenticationService;
+    private AuthenticationService authenticationService;
 
     private String getDayOfWeek(int value) {
         String day = "";
@@ -97,7 +95,7 @@ public class CalendarActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_calendar);
 
-        authenticationService = new Authentication();
+        authenticationService = new AuthenticationService();
 
         mSignOutButton = (Button) findViewById(R.id.sign_out_button);
 

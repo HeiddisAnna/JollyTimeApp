@@ -30,6 +30,8 @@ dependencies {
 
     implementation 'com.google.firebase:firebase-core:16.0.1'
 
+    implementation 'com.google.firebase:firebase-database:16.1.0'
+
     //implementation 'com.google.firebase:firebase-auth:9.6.1'
 
     implementation 'com.firebaseui:firebase-ui:4.3.1'

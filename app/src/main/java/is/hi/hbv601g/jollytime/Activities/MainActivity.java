@@ -11,7 +11,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
-import is.hi.hbv601g.jollytime.FirebaseServices.Authentication;
+import is.hi.hbv601g.jollytime.FirebaseServices.AuthenticationService;
 import is.hi.hbv601g.jollytime.Models.Date;
 import is.hi.hbv601g.jollytime.Models.User;
 import is.hi.hbv601g.jollytime.Models.Event;
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText mEmailInput;
     private EditText mPasswordInput;
 
-    private Authentication authenticationService;
+    private AuthenticationService authenticationService;
 
 
     // PRUFUGÖGN!!!
@@ -46,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         // PRUFUGÖGN!!!
+        /*
 
         mUsersBank.add(new User("Marín", "password", "mim17@hi.is",
                 new ArrayList<Event>(), new ArrayList<Date>(), new ArrayList<User>(), new ArrayList<Notification>()));
@@ -77,13 +78,14 @@ public class MainActivity extends AppCompatActivity {
                 new GregorianCalendar(2018, 3, 12, 15,30),
                 new GregorianCalendar(2018, 3, 12, 20,0),
                 mUsersBank.get(1)));
+                */
 
         // PRUFUGÖGN!!!
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        authenticationService = new Authentication(this);
+        authenticationService = new AuthenticationService(this);
 
         mSignInButton = (Button) findViewById(R.id.signin_button);
         mCreateAccountButton = (Button) findViewById(R.id.createaccount_button);
@@ -116,9 +118,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onAuthenticationFail() {
-        Toast.makeText(MainActivity.this, "Authentication failed.",
+        Toast.makeText(MainActivity.this, "AuthenticationService failed.",
                 Toast.LENGTH_SHORT).show();
     }
+
 
     @Override
     public void onStart() {
@@ -132,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 
 
 }

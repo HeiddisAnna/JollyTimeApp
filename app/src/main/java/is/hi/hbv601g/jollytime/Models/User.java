@@ -7,11 +7,12 @@ import java.util.List;
 
 public class User implements Serializable {
 
-    private long id;
-
     private String name;
-    private String password;
+
     private String email;
+
+    // EKKI GLEYMA AÐ TAKA!!!!!
+    private String password;
 
     private List<Event> events;
 
@@ -25,7 +26,12 @@ public class User implements Serializable {
 
     public User() {}
 
-    public User(String name, String password, String email, List<Event> events, List<Date> dates,
+    public User(String email, String name) {
+        this.email = email;
+        this.name = name;
+    }
+
+    public User(String email, String password, String name, List<Event> events, List<Date> dates,
                 List<User> friends, List<Notification> notifications) {
         this.name = name;
         this.password = password;
@@ -37,14 +43,6 @@ public class User implements Serializable {
 
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getName() {
         return name;
     }
@@ -53,8 +51,12 @@ public class User implements Serializable {
         return email;
     }
 
-    public String getPassword() {
-        return password;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
 

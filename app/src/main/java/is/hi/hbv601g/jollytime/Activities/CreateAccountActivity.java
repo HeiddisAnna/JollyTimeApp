@@ -7,15 +7,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import is.hi.hbv601g.jollytime.FirebaseServices.Authentication;
+import is.hi.hbv601g.jollytime.FirebaseServices.AuthenticationService;
 import is.hi.hbv601g.jollytime.Services.UserService;
 
 public class CreateAccountActivity extends AppCompatActivity {
 
-    private static final String USERS = "is.hi.hbv601g.jollytime.users";
-
-
-    private Authentication authenticationService;
+    private AuthenticationService authenticationService;
     private UserService userService;
 
 
@@ -37,7 +34,7 @@ public class CreateAccountActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_account);
 
-        authenticationService = new Authentication(this);
+        authenticationService = new AuthenticationService(this);
 
         mCreateAccountButton = (Button) findViewById(R.id.create_button);
 
@@ -78,8 +75,8 @@ public class CreateAccountActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT).show();
 
                 } else {
-
-                    authenticationService.createAccount(email, password1);
+                    authenticationService.addVars(email, name, password1);
+                    authenticationService.createAccount();
                 }
             }
         });
@@ -90,12 +87,8 @@ public class CreateAccountActivity extends AppCompatActivity {
     }
 
     public void onCreatingAccountFailure() {
-        Toast.makeText(CreateAccountActivity.this, "Authentication failed.",
+        Toast.makeText(CreateAccountActivity.this, "AuthenticationService failed.",
                 Toast.LENGTH_SHORT).show();
     }
-
-
-
-
 
 }
