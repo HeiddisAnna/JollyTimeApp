@@ -3,21 +3,35 @@ package is.hi.hbv601g.jollytime.Activities;
 import android.content.Intent;
 import android.icu.util.Calendar;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CalendarView;
-import android.widget.TextView;
 
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.CalendarMode;
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
+
+import android.widget.TextView;
 import is.hi.hbv601g.jollytime.FirebaseServices.AuthenticationService;
+
+import org.threeten.bp.DayOfWeek;
+
+import java.util.ArrayList;
+
+import is.hi.hbv601g.jollytime.Decorators.CurrentDayDecorator;
+import is.hi.hbv601g.jollytime.Decorators.EventDecorator;
+import is.hi.hbv601g.jollytime.Models.User;
 
 public class CalendarActivity extends AppCompatActivity {
 
     private Button mSignOutButton;
     private AuthenticationService authenticationService;
 
+    // Ná í vikudag, streng
     private String getDayOfWeek(int value) {
         String day = "";
         switch(value){
@@ -46,6 +60,7 @@ public class CalendarActivity extends AppCompatActivity {
         return day;
     }
 
+    // Ná í mánuð, streng
     private String getMonth(int value) {
         String monthName = "";
         switch(value){
@@ -89,6 +104,8 @@ public class CalendarActivity extends AppCompatActivity {
         return monthName;
     }
 
+    private ArrayList<User> user;
+
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,9 +115,19 @@ public class CalendarActivity extends AppCompatActivity {
         authenticationService = new AuthenticationService();
 
         mSignOutButton = (Button) findViewById(R.id.sign_out_button);
-
-        CalendarView calendarView = findViewById(R.id.calendarView);
         Calendar cal = Calendar.getInstance();
+
+        final Intent i = getIntent();
+        //user = (ArrayList<User>) i.getSerializableExtra("USER");
+
+        // Skilgreina buttons og views frá xml skrá
+
+        MaterialCalendarView calendarView;
+        calendarView = findViewById(R.id.calendarView);
+
+        calendarView.addDecorators(new EventDecorator(this));
+        calendarView.addDecorator(new CurrentDayDecorator(this));
+
         Button goToDay_button = findViewById(R.id.go_to_date_button);
         final TextView yearText = findViewById(R.id.year_textView);
         final TextView dateText = findViewById(R.id.date_textView);
@@ -114,14 +141,37 @@ public class CalendarActivity extends AppCompatActivity {
         dayOfWeek = getDayOfWeek(cal.get(Calendar.DAY_OF_WEEK));
         month = getMonth(cal.get(Calendar.MONTH));
 
+        calendarView.state().edit()
+                .setFirstDayOfWeek(DayOfWeek.of(Calendar.MONDAY))
+                .setMinimumDate(CalendarDay.from(1900, 1, 1))
+                .setMaximumDate(CalendarDay.from(2200, 12, 31))
+                .setCalendarDisplayMode(CalendarMode.MONTHS)
+                .commit();
+
+        //final String selectedDate = String.valueOf(calendarView.getSelectedDate());
+        //final String year = "2019";
+
         final String selectedDate = String.format("%s, %s %s", dayOfWeek.substring(0, 3), month.substring(0, 3), String.valueOf(dayOfMonth));
 
-        yearText.setText(String.valueOf(year));
+        yearText.setText(year);
         dateText.setText(selectedDate);
 
-        calendarView.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+        calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
-            public void onSelectedDayChange(@android.support.annotation.NonNull CalendarView view, int year, int month, int dayOfMonth) {
+            public void onDateSelected(@NonNull MaterialCalendarView materialCalendarView, @NonNull CalendarDay calendarDay, boolean b) {
+
+                String date = String.valueOf(calendarDay.getDate());
+
+                String yearString = String.valueOf(calendarDay.getYear());
+
+                yearText.setText(yearString);
+                dateText.setText(date);
+            }
+        });
+
+        /*calendarView.setOnDateChangeListener( new OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(@NonNull MaterialCalendarView view, int year, int month, int dayOfMonth) {
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(year, month, dayOfMonth);
                 String monthName = getMonth(month);
@@ -133,7 +183,7 @@ public class CalendarActivity extends AppCompatActivity {
                 yearText.setText(yearString);
                 dateText.setText(date);
             }
-        });
+        });*/
 
         goToDay_button.setOnClickListener(new View.OnClickListener() {
             @Override
