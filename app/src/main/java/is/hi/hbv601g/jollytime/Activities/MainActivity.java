@@ -3,6 +3,7 @@ package is.hi.hbv601g.jollytime.Activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -46,9 +47,9 @@ public class MainActivity extends AppCompatActivity {
 
 
         // PRUFUGÖGN!!!
-        /*
 
-        mUsersBank.add(new User("Marín", "password", "mim17@hi.is",
+
+        /*mUsersBank.add(new User("Marín", "password", "mim17@hi.is",
                 new ArrayList<Event>(), new ArrayList<Date>(), new ArrayList<User>(), new ArrayList<Notification>()));
         mUsersBank.add(new User("Birta", "password", "bds8@hi.is",
                 new ArrayList<Event>(), new ArrayList<Date>(), new ArrayList<User>(), new ArrayList<Notification>()));
