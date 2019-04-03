@@ -42,8 +42,5 @@ public class CreateEventService {
         return false;
     }
 
-    public Boolean insertEvent() {
-        return true;
-    }
 
 }

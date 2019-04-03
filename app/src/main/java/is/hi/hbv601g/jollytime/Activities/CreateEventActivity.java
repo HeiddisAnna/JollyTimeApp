@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import is.hi.hbv601g.jollytime.FirebaseServices.EventDatabaseService;
 import is.hi.hbv601g.jollytime.Services.CreateEventService;
 
 public class CreateEventActivity extends AppCompatActivity {
@@ -22,18 +23,8 @@ public class CreateEventActivity extends AppCompatActivity {
     private DatePicker mEndDate;
     private TimePicker mStertTime;
     private TimePicker mEndTime;
-    /* private int startYear;
-    private int startMonth;
-    private int startDay;
-    private int startHour;
-    private int startMin;
-    private int endYear;
-    private int endMonth;
-    private int endDay;
-    private int endHour;
-    private int endMin;
-    */
     private CreateEventService createEventService;
+    private EventDatabaseService eventDatabaseService;
 
 
     @Override
@@ -46,7 +37,7 @@ public class CreateEventActivity extends AppCompatActivity {
         mTitle = (EditText) findViewById(R.id.title_input);
         mDescription = (EditText) findViewById(R.id.description_input);
 
-
+        eventDatabaseService = new EventDatabaseService(this);
 
         String title = mTitle.getText().toString();
         String description = mDescription.getText().toString();
@@ -61,6 +52,9 @@ public class CreateEventActivity extends AppCompatActivity {
                 DatePicker mEndDate = (DatePicker)findViewById(R.id.endDatePicker);
                 TimePicker mStartTime = (TimePicker)findViewById(R.id.startTimePicker);
                 TimePicker mEndTime = (TimePicker)findViewById(R.id.endTimePicker);
+
+                String title = mTitle.getText().toString();
+                String description = mDescription.getText().toString();
 
                 int startYear = mStartDate.getYear();
                 int startMonth = mStartDate.getMonth();
@@ -77,8 +71,10 @@ public class CreateEventActivity extends AppCompatActivity {
                 createEventService = new CreateEventService(startYear, startMonth, startDay,
                         startHour, startMin, endYear, endMonth, endDay, endHour, endMin);
 
+
                 if(createEventService.rightDate()) {
-                    boolean a = createEventService.insertEvent();
+                    eventDatabaseService.saveNewEvent(title, description, startYear, startMonth, startDay,
+                            startHour, startMin, endYear, endMonth, endDay, endHour, endMin);
                     Intent intent = new Intent(CreateEventActivity.this, CalendarActivity.class);
                     startActivity(intent);
                 } else {
