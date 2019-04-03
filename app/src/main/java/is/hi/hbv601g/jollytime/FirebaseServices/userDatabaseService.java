@@ -8,10 +8,10 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+
 import is.hi.hbv601g.jollytime.Activities.CreateAccountActivity;
 import is.hi.hbv601g.jollytime.Models.User;
 
-import static com.firebase.ui.auth.AuthUI.TAG;
 
 public class userDatabaseService {
 
@@ -19,6 +19,7 @@ public class userDatabaseService {
     private AuthenticationService authenticationService;
 
     private CreateAccountActivity createAccountActivity;
+
 
     public userDatabaseService(AuthenticationService authenticationService) {
         this.mDatabase = FirebaseDatabase.getInstance().getReference("users");
@@ -33,9 +34,11 @@ public class userDatabaseService {
     }
 
     public void saveNewUser(String email, String name) {
-        User user = new User(email, name);
+
 
         String userID = authenticationService.getCurrentUserId();
+
+        User user = new User(email, name, userID);
 
         mDatabase.child(userID).setValue(user)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -48,19 +51,11 @@ public class userDatabaseService {
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
-                        Log.e("bla: ", e.getMessage());
                         createAccountActivity.onCreatingAccountFailure();
                     }
                 });
 
     }
-
-    /*
-    public User findUser() {
-        String userID = authenticationService.getCurrentUserId();
-
-    }
-    */
 
 
 }
