@@ -95,7 +95,6 @@ public class AuthenticationService {
 
 
     public void signIn(String email, String password) {
-        Log.i(null, "komin í signIn");
         mAuth.signInWithEmailAndPassword(email, password)
 
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {

@@ -7,6 +7,7 @@ import java.util.List;
 
 public class User implements Serializable {
 
+    private String id;
     private String name;
 
     private String email;
@@ -29,6 +30,13 @@ public class User implements Serializable {
     public User(String email, String name) {
         this.email = email;
         this.name = name;
+    }
+
+
+    public User(String email, String name, String id) {
+        this.email = email;
+        this.name = name;
+        this.id = id;
     }
 
     public User(String email, String password, String name, List<Event> events, List<Date> dates,
@@ -59,6 +67,9 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    public String getId() { return id; }
+
+    public void setId(String id) { this.id = id; }
 
     public List<Event> getEvents() {
         return events;
