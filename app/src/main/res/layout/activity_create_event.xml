@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
+
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -6,19 +9,56 @@
     android:layout_height="match_parent"
     tools:context=".CreateEventActivity">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp"
+        android:layout_weight="2">
+
+
+        <TextView
+            android:id="@+id/date_DayTextView"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:text="Create event"
+            android:textColor="@color/colorWhite"
+            android:textSize="46sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/year_dayTextView" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="192dp"
+            android:background="#ffa000"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="0dp" />
+    </LinearLayout>
+
+
     <ScrollView
+        android:layout_marginTop="125dp"
+        android:layout_marginBottom="10dp"
+        android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
         android:orientation="vertical"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="84dp">
+        tools:layout_editor_absoluteX="137dp"
+        tools:layout_editor_absoluteY="0dp">
 
         <LinearLayout
             android:id="@+id/addEvent_LinearLayot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_weight="1">
 
             <EditText
                 android:id="@+id/title_input"
@@ -53,23 +93,6 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/title_input" />
-
-            <EditText
-                android:id="@+id/dateLength_input"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:ems="10"
-                android:inputType="number|textPersonName"
-                android:text="Length of date (min)"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/description_input" />
 
             <TextView
                 android:id="@+id/timeperiod_Text"
@@ -106,9 +129,11 @@
 
             <LinearLayout
                 android:id="@+id/addEvent_LinearLayot"
+                android:layout_marginHorizontal= "30dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="1">
 
 
                 <DatePicker
@@ -125,10 +150,43 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.625"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/dateLength_input" />/
+                    app:layout_constraintTop_toBottomOf="@+id/dateLength_input" /><![CDATA[/
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/datePicker1" />
+
+                ]]>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/timeperiod_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="8dp"
+                android:text="Start time"
+                app:layout_constraintBottom_toTopOf="@+id/endDate_Text"
+                app:layout_constraintEnd_toStartOf="@+id/startDatePicker"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/addEvent_LinearLayot"
+                android:layout_marginHorizontal= "30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"><![CDATA[
+
+
+                /
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/datePicker1" />
+
+                ]]>
 
                 <TimePicker
                     android:id="@+id/startTimePicker"
@@ -155,8 +213,9 @@
 
             <LinearLayout
                 android:id="@+id/addEvent_LinearLayot"
+                android:layout_marginHorizontal= "30dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_marginTop="0dp"
                 android:orientation="horizontal">
 
@@ -174,10 +233,44 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.623"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/startDatePicker" />/
+                    app:layout_constraintTop_toBottomOf="@+id/startDatePicker" /><![CDATA[/
                 app:layout_constraintBottom_toTopOf="@+id/starDatePicker"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/description_input" />
+
+                ]]>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/endDate_Text2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
+                android:layout_marginBottom="0dp"
+                android:text="End time"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/endDatePicker"
+                app:layout_constraintHorizontal_bias="0.222"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/addEvent_LinearLayot"
+                android:layout_marginHorizontal= "30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal"><![CDATA[
+
+                /
+                app:layout_constraintBottom_toTopOf="@+id/starDatePicker"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/description_input" />
+
+                ]]>
 
                 <TimePicker
                     android:id="@+id/endTimePicker"
