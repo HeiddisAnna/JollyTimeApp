@@ -20,12 +20,14 @@ import is.hi.hbv601g.jollytime.Models.User;
 
 public class EventDatabaseService {
     private DatabaseReference mDatabase;
+    private DatabaseReference mUsersDatabase;
     private AuthenticationService authenticationService;
     private CreateEventActivity createEventActivity;
 
 
     public EventDatabaseService(CreateEventActivity createEventActivity) {
         this.mDatabase = FirebaseDatabase.getInstance().getReference("events");
+        this.mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
         this.authenticationService = new AuthenticationService();
         this.createEventActivity = createEventActivity;
     }
@@ -60,5 +62,22 @@ public class EventDatabaseService {
                     }
                 });
 
+        mUsersDatabase.child(userID).setValue(eventID)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        //    createAccountActivity.onCreatingAccountSuccessfully();
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e("bla: ", e.getMessage());
+                        //   createAccountActivity.onCreatingAccountFailure();
+                    }
+                });
+
     }
 }
+
