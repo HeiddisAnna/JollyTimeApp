@@ -11,6 +11,8 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import java.util.GregorianCalendar;
+
 import is.hi.hbv601g.jollytime.FirebaseServices.EventDatabaseService;
 import is.hi.hbv601g.jollytime.Services.CreateEventService;
 
@@ -68,13 +70,19 @@ public class CreateEventActivity extends AppCompatActivity {
                 int endHour = mEndTime.getHour();
                 int endMin = mEndTime.getMinute();
 
+
+                GregorianCalendar startTime = new GregorianCalendar(startYear, startMonth, startDay, startHour, startMin);
+                GregorianCalendar endTime = new GregorianCalendar(endYear, endMonth, endDay, endHour, endMin);
+
+                String meStartDate =  "" + startYear + "-" + startMonth + "-" + startDay + ' ' + startHour + ":" + startMin + "" ;
+                String meEndDate = "" + endYear + "-" + endMonth + "-" + endDay + ' ' + endHour + ":" + endMin + "" ;
+
                 createEventService = new CreateEventService(startYear, startMonth, startDay,
                         startHour, startMin, endYear, endMonth, endDay, endHour, endMin);
 
 
                 if(createEventService.rightDate()) {
-                    eventDatabaseService.saveNewEvent(title, description, startYear, startMonth, startDay,
-                            startHour, startMin, endYear, endMonth, endDay, endHour, endMin);
+                    eventDatabaseService.saveNewEvent(title, description, startTime, meStartDate, endTime, meEndDate);
                     Intent intent = new Intent(CreateEventActivity.this, CalendarActivity.class);
                     startActivity(intent);
                 } else {

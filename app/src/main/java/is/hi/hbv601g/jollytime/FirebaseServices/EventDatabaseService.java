@@ -8,6 +8,11 @@ import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import is.hi.hbv601g.jollytime.Activities.CreateAccountActivity;
 import is.hi.hbv601g.jollytime.Activities.CreateEventActivity;
 import is.hi.hbv601g.jollytime.Models.Event;
@@ -25,11 +30,13 @@ public class EventDatabaseService {
         this.createEventActivity = createEventActivity;
     }
 
-    public void saveNewEvent(String title, String description, int startYear, int startMonth, int startDay,
-                             int startHour, int startMin, int endYear, int endMonth, int endDay, int endHour, int endMin) {
+    public void saveNewEvent(String title, String description, GregorianCalendar startTime,
+                             String meStartDate, GregorianCalendar endTime, String meEndDate) {
+
+
         String userID = authenticationService.getCurrentUserId();
-        Event event = new Event(title, description, startYear, startMonth, startDay, startHour, startMin,
-            endYear, endMonth, endDay, endHour, endMin, userID);
+
+        Event event = new Event(title, description, startTime, meStartDate, endTime, meEndDate, userID);
 
         DatabaseReference pushedEventRef = mDatabase.push();
         String eventID = pushedEventRef.getKey();
