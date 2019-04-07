@@ -92,7 +92,7 @@ public class CalendarActivity extends AppCompatActivity {
             case R.id.menu_logout:
                 authenticationService.signOut();
                 finish();
-                break;
+                return;
             default:
                 fragmentClass = CalendarFragment.class;
         }
