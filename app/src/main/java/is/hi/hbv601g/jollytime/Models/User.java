@@ -1,4 +1,12 @@
 package is.hi.hbv601g.jollytime.Models;
+import android.support.annotation.NonNull;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -15,12 +23,13 @@ public class User implements Serializable {
     // EKKI GLEYMA AÐ TAKA!!!!!
     private String password;
 
-    private List<Event> events;
+    private List<String> events;
+    private String eventsID;
 
+    private List<String> dates;
 
-    private List<Date> dates;
-
-    private List<User> friends;
+    private List<String> friends;
+    private String friendsID;
 
 
     private List<Notification> notifications;
@@ -37,18 +46,8 @@ public class User implements Serializable {
         this.email = email;
         this.name = name;
         this.id = id;
-    }
-
-    public User(String email, String password, String name, List<Event> events, List<Date> dates,
-                List<User> friends, List<Notification> notifications) {
-        this.name = name;
-        this.password = password;
-        this.email = email;
-        this.events = events;
-        this.dates = dates;
-        this.friends = friends;
-        this.notifications = notifications;
-
+        this.eventsID = "";
+        this.friendsID = "";
     }
 
     public String getName() {
@@ -63,6 +62,26 @@ public class User implements Serializable {
         this.name = name;
     }
 
+    public void setEvents (final String eventsID) {
+        events.add(eventsID);
+    }
+
+    public String getEventsID() {
+        return this.eventsID;
+    }
+
+    public void setEventsID (final String eventsID) {
+        this.eventsID = eventsID;
+    }
+
+    public String getFriendsID() {
+        return this.friendsID;
+    }
+
+    public void setFriendsID (final String friendsID) {
+        this.friendsID = friendsID;
+    }
+
     public void setEmail(String email) {
         this.email = email;
     }
@@ -71,28 +90,8 @@ public class User implements Serializable {
 
     public void setId(String id) { this.id = id; }
 
-    public List<Event> getEvents() {
-        return events;
-    }
-
-    public void addEvent(Event event) {
-        events.add(event);
-    }
-
-    public List<Date> getDates() {
-        return dates;
-    }
-
-    public void addDate(Date date) {
-        dates.add(date);
-    }
-
-    public List<User> getFriends() {
-        return friends;
-    }
-
-    public void addFriend(User friend) {
-        friends.add(friend);
+    public void addEvent(String event) {
+        this.events.add(event);
     }
 
     public List<Notification> getNotifications() {

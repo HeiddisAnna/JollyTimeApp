@@ -68,7 +68,7 @@
                 android:layout_marginRight="16dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Title"
+                android:hint="Title"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -85,7 +85,7 @@
                 android:layout_marginRight="14dp"
                 android:ems="10"
                 android:inputType="textPersonName"
-                android:text="Description"
+                android:hint="Description"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -130,6 +130,105 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <DatePicker
+                    android:id="@+id/startDatePeriod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="0dp"
+                    android:calendarViewShown="false"
+                    android:datePickerMode="spinner"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.625"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dateLength_input" /><![CDATA[/
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/datePicker1" />
+
+                ]]>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/addEvent_LinearLayot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"><![CDATA[
+
+                /
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/datePicker1" />
+
+                ]]>
+
+                <TimePicker
+                    android:id="@+id/startTimePeriod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:timePickerMode="spinner" />
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/addEvent_LinearLayot"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <DatePicker
+                    android:id="@+id/endDatePeriod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginRight="0dp"
+                    android:calendarViewShown="false"
+                    android:datePickerMode="spinner"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.625"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/dateLength_input" /><![CDATA[/
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/datePicker1" />
+
+                ]]>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/addEvent_LinearLayot"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"><![CDATA[
+
+                /
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/datePicker1" />
+
+                ]]>
+
+                <TimePicker
+                    android:id="@+id/endTimePeriod"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:timePickerMode="spinner" />
+            </LinearLayout>
+
+
+
+            <LinearLayout
+                android:id="@+id/addEvent_LinearLayot"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
                 <DatePicker
                     android:id="@+id/startDatePicker"
@@ -173,7 +272,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"><![CDATA[
-
 
                 /
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -273,12 +371,12 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/create_event_button"
+                android:id="@+id/book_date_button"
                 android:layout_width="wrap_content"
                 android:layout_height="41dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:text="Create Event"
+                android:text="Book a Date"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
