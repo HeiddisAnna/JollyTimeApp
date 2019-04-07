@@ -24,14 +24,17 @@ public class Event implements Serializable {
     public Event() {
     }
 
+    public Event(GregorianCalendar startTime, GregorianCalendar endTime) {
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
     public Event(String title, String description,
-                 GregorianCalendar startTime, String startDate, GregorianCalendar endTime, String endDate,
+                 String startDate, String endDate,
                  String userID) {
         this.title = title;
         this.description = description;
-        this.startTime = startTime;
         this.startDate = startDate;
-        this.endTime = endTime;
         this.endDate = endDate;
         this.userID = userID;
     }
@@ -83,5 +86,23 @@ public class Event implements Serializable {
     public void setUserID(String userID) {
         this.userID = userID;
     }
+
+    public GregorianCalendar getGregorianStartTime(){
+        return this.startTime;
+    }
+
+    public void setGregorianStartTime(GregorianCalendar startTime){
+        this.startTime = startTime;
+    }
+
+    public GregorianCalendar getGregorianEndTime(){
+        return this.endTime;
+    }
+
+    public void setGregorianEndTime(GregorianCalendar endTime){
+        this.endTime = endTime;
+    }
+
+
 }
 
