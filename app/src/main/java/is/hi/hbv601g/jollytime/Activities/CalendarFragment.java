@@ -35,25 +35,25 @@ public class CalendarFragment extends Fragment {
     private String getDayOfWeek(int value) {
         String day = "";
         switch(value){
-            case 1:
+            case 3:
                 day = "Sunday";
                 break;
-            case 2:
+            case 4:
                 day = "Monday";
                 break;
-            case 3:
+            case 5:
                 day = "Tuesday";
                 break;
-            case 4:
+            case 6:
                 day = "Wednesday";
                 break;
-            case 5:
+            case 7:
                 day = "Thursday";
                 break;
-            case 6:
+            case 1:
                 day = "Friday";
                 break;
-            case 7:
+            case 2:
                 day = "Saturday";
                 break;
         }
@@ -63,40 +63,40 @@ public class CalendarFragment extends Fragment {
     private String getMonth(int value) {
         String monthName = "";
         switch(value){
-            case 0:
+            case 1:
                 monthName = "January";
                 break;
-            case 1:
+            case 2:
                 monthName = "February";
                 break;
-            case 2:
+            case 3:
                 monthName = "March";
                 break;
-            case 3:
+            case 4:
                 monthName = "April";
                 break;
-            case 4:
+            case 5:
                 monthName = "May";
                 break;
-            case 5:
+            case 6:
                 monthName = "June";
                 break;
-            case 6:
+            case 7:
                 monthName = "July";
                 break;
-            case 7:
+            case 8:
                 monthName = "August";
                 break;
-            case 8:
+            case 9:
                 monthName = "September";
                 break;
-            case 9:
+            case 10:
                 monthName = "October";
                 break;
-            case 10:
+            case 11:
                 monthName = "November";
                 break;
-            case 11:
+            case 12:
                 monthName = "December";
                 break;
         }

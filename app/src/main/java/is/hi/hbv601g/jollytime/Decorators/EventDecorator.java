@@ -5,9 +5,11 @@ import com.prolificinteractive.materialcalendarview.DayViewDecorator;
 import com.prolificinteractive.materialcalendarview.DayViewFacade;
 
 import is.hi.hbv601g.jollytime.Activities.CalendarActivity;
+import is.hi.hbv601g.jollytime.FirebaseServices.EventDatabaseService;
 
 public class EventDecorator implements DayViewDecorator {
 
+    private EventDatabaseService eventDatabaseService;
 
     public EventDecorator(CalendarActivity calendarActivity) {
 
