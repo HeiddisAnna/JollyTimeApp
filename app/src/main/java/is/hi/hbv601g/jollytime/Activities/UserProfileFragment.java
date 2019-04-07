@@ -1,4 +1,4 @@
-package is.hi.hbv601g.jollytime.Fragments;
+package is.hi.hbv601g.jollytime.Activities;
 
 import android.content.Context;
 import android.net.Uri;
@@ -8,18 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import is.hi.hbv601g.jollytime.Activities.R;
-
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Settings.OnFragmentInteractionListener} interface
+ * {@link UserProfileFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link Settings#newInstance} factory method to
+ * Use the {@link UserProfileFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Settings extends Fragment {
+public class UserProfileFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,7 +29,7 @@ public class Settings extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public Settings() {
+    public UserProfileFragment() {
         // Required empty public constructor
     }
 
@@ -41,11 +39,11 @@ public class Settings extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Settings.
+     * @return A new instance of fragment UserProfileFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static Settings newInstance(String param1, String param2) {
-        Settings fragment = new Settings();
+    public static UserProfileFragment newInstance(String param1, String param2) {
+        UserProfileFragment fragment = new UserProfileFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -66,7 +64,7 @@ public class Settings extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_settings, container, false);
+        return inflater.inflate(R.layout.fragment_user_profile, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
