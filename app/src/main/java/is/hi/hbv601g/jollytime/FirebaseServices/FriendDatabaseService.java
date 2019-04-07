@@ -1,5 +1,7 @@
 package is.hi.hbv601g.jollytime.FirebaseServices;
 
+
+
 import android.support.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -16,7 +18,7 @@ import java.util.Iterator;
 import is.hi.hbv601g.jollytime.Activities.AddFriendActivity;
 import is.hi.hbv601g.jollytime.Models.User;
 
-public class FDB {
+public class FriendDatabaseService {
 
     private AuthenticationService authenticationService;
     private DatabaseReference mDatabase;
@@ -25,7 +27,7 @@ public class FDB {
     private String friendsEmail;
     private String friendId;
 
-    public FDB(AddFriendActivity addFriendActivity) {
+    public FriendDatabaseService(AddFriendActivity addFriendActivity) {
         this.mDatabase = FirebaseDatabase.getInstance().getReference("users");
         this.authenticationService = new AuthenticationService();
         this.addFriendActivity = addFriendActivity;
