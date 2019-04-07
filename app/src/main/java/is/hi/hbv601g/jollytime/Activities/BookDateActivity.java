@@ -11,7 +11,9 @@ package is.hi.hbv601g.jollytime.Activities;
         import android.widget.TimePicker;
         import android.widget.Toast;
 
+        import java.util.ArrayList;
         import java.util.GregorianCalendar;
+        import java.util.List;
 
         import is.hi.hbv601g.jollytime.FirebaseServices.EventDatabaseService;
         import is.hi.hbv601g.jollytime.Services.BookDateService;
@@ -71,14 +73,17 @@ public class BookDateActivity extends AppCompatActivity {
                 int endMin = mEndTime.getMinute();
 
 
-                GregorianCalendar startTime = new GregorianCalendar(startYear, startMonth, startDay, startHour, startMin);
-                GregorianCalendar endTime = new GregorianCalendar(endYear, endMonth, endDay, endHour, endMin);
+                GregorianCalendar startTimePeriod = new GregorianCalendar(startYear, startMonth, startDay, startHour, startMin);
+                GregorianCalendar endTimePeriod = new GregorianCalendar(endYear, endMonth, endDay, endHour, endMin);
 
                 String meStartDate =  "" + startYear + "-" + startMonth + "-" + startDay + ' ' + startHour + ":" + startMin + "" ;
                 String meEndDate = "" + endYear + "-" + endMonth + "-" + endDay + ' ' + endHour + ":" + endMin + "" ;
 
-                // bookDateService = new BookDateService();
+                List<String> usersID = new ArrayList<String>();
+                usersID.add("EAUUrzlCqFO5KbS8jP8dJnqAhVG2");
+                usersID.add("aTd5KoHabeUZIyp3pcx9yNpqNTE3");
 
+                bookDateService = new BookDateService(startTimePeriod, endTimePeriod, usersID);
 
             }
         });
