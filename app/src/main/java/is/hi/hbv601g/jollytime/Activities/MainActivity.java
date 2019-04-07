@@ -45,44 +45,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-
-        // PRUFUGÖGN!!!
-
-
-        /*mUsersBank.add(new User("Marín", "password", "mim17@hi.is",
-                new ArrayList<Event>(), new ArrayList<Date>(), new ArrayList<User>(), new ArrayList<Notification>()));
-        mUsersBank.add(new User("Birta", "password", "bds8@hi.is",
-                new ArrayList<Event>(), new ArrayList<Date>(), new ArrayList<User>(), new ArrayList<Notification>()));
-
-
-        ArrayList<User> f0 = new ArrayList<User>();
-        f0.add(mUsersBank.get(0));
-        ArrayList<User> f1 = new ArrayList<User>();
-        f1.add(mUsersBank.get(0));
-
-
-        mUsersBank.get(0).addFriend(mUsersBank.get(1));
-        mUsersBank.get(0).addEvent(new Event("Dans", "Í Sporthúsinu",
-                new GregorianCalendar(2018, 3, 10, 12,30),
-                new GregorianCalendar(2018, 3, 10, 14,0),
-                mUsersBank.get(0)));
-        mUsersBank.get(0).addEvent(new Event("Píanó", "Í Tónó",
-                new GregorianCalendar(2018, 3, 12, 14,30),
-                new GregorianCalendar(2018, 3, 12, 16,0),
-                mUsersBank.get(0)));
-        mUsersBank.get(1).addFriend(mUsersBank.get(0));
-        mUsersBank.get(1).addEvent(new Event("Læra", "Heima",
-                new GregorianCalendar(2018, 3, 11, 12,30),
-                new GregorianCalendar(2018, 3, 11, 14,0),
-                mUsersBank.get(1)));
-        mUsersBank.get(1).addEvent(new Event("Partý", "Niðrí bæ",
-                new GregorianCalendar(2018, 3, 12, 15,30),
-                new GregorianCalendar(2018, 3, 12, 20,0),
-                mUsersBank.get(1)));
-                */
-
-        // PRUFUGÖGN!!!
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

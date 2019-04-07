@@ -32,13 +32,12 @@ public class EventDatabaseService {
         this.createEventActivity = createEventActivity;
     }
 
-    public void saveNewEvent(String title, String description, GregorianCalendar startTime,
-                             String meStartDate, GregorianCalendar endTime, String meEndDate) {
+    public void saveNewEvent(String title, String description, String meStartDate, String meEndDate) {
 
 
         String userID = authenticationService.getCurrentUserId();
 
-        Event event = new Event(title, description, startTime, meStartDate, endTime, meEndDate, userID);
+        Event event = new Event(title, description, meStartDate, meEndDate, userID);
 
         DatabaseReference pushedEventRef = mDatabase.push();
         String eventID = pushedEventRef.getKey();
@@ -62,9 +61,7 @@ public class EventDatabaseService {
                     }
                 });
 
-        DatabaseReference pushedUserEvent = mUsersDatabase.child(userID).push();
-
-        pushedUserEvent.setValue(userID)
+        mUsersDatabase.child(userID).child("eventsID").child(eventID).setValue(true)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {

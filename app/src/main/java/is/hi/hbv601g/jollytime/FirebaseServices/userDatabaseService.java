@@ -9,7 +9,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 
+import java.util.ArrayList;
+import java.util.List;
+
 import is.hi.hbv601g.jollytime.Activities.CreateAccountActivity;
+import is.hi.hbv601g.jollytime.Models.Event;
 import is.hi.hbv601g.jollytime.Models.User;
 
 
@@ -37,6 +41,7 @@ public class userDatabaseService {
 
 
         String userID = authenticationService.getCurrentUserId();
+        List<Event> events = new ArrayList<Event>();
 
         User user = new User(email, name, userID);
 

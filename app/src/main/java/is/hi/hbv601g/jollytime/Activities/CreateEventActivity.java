@@ -70,10 +70,6 @@ public class CreateEventActivity extends AppCompatActivity {
                 int endHour = mEndTime.getHour();
                 int endMin = mEndTime.getMinute();
 
-
-                GregorianCalendar startTime = new GregorianCalendar(startYear, startMonth, startDay, startHour, startMin);
-                GregorianCalendar endTime = new GregorianCalendar(endYear, endMonth, endDay, endHour, endMin);
-
                 String meStartDate =  "" + startYear + "-" + startMonth + "-" + startDay + ' ' + startHour + ":" + startMin + "" ;
                 String meEndDate = "" + endYear + "-" + endMonth + "-" + endDay + ' ' + endHour + ":" + endMin + "" ;
 
@@ -82,7 +78,7 @@ public class CreateEventActivity extends AppCompatActivity {
 
 
                 if(createEventService.rightDate()) {
-                    eventDatabaseService.saveNewEvent(title, description, startTime, meStartDate, endTime, meEndDate);
+                    eventDatabaseService.saveNewEvent(title, description, meStartDate, meEndDate);
                     Intent intent = new Intent(CreateEventActivity.this, CalendarActivity.class);
                     startActivity(intent);
                 } else {
