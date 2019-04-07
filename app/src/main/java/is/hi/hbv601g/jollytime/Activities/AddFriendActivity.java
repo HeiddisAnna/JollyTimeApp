@@ -8,7 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import is.hi.hbv601g.jollytime.FirebaseServices.FriendDatabaseService;
+import is.hi.hbv601g.jollytime.FirebaseServices.FDB;
 import is.hi.hbv601g.jollytime.Models.User;
 import is.hi.hbv601g.jollytime.Services.AddFriend;
 
@@ -22,6 +22,7 @@ public class AddFriendActivity extends AppCompatActivity {
     private Button mAddFriendButton;
 
     private AddFriend addFriendService;
+    private FDB friendDatabaseService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,12 +30,12 @@ public class AddFriendActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_friend);
 
         mAddFriendButton = (Button) findViewById(R.id.addFriend_button);
-        final FriendDatabaseService friendDatabaseService = new FriendDatabaseService(this);
+         friendDatabaseService = new FDB(this);
 
         mAddFriendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mEmailInput = (EditText) findViewById(R.id.friends_email_input);
+                //mEmailInput = (EditText) findViewById(R.id.friends_email_input);
 
                 email = mEmailInput.getText().toString();
                 friendDatabaseService.addFriend(email);

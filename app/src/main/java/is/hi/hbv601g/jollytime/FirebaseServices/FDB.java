@@ -16,7 +16,7 @@ import java.util.Iterator;
 import is.hi.hbv601g.jollytime.Activities.AddFriendActivity;
 import is.hi.hbv601g.jollytime.Models.User;
 
-public class FriendDatabaseService {
+public class FDB {
 
     private AuthenticationService authenticationService;
     private DatabaseReference mDatabase;
@@ -25,7 +25,7 @@ public class FriendDatabaseService {
     private String friendsEmail;
     private String friendId;
 
-    public FriendDatabaseService(AddFriendActivity addFriendActivity) {
+    public FDB(AddFriendActivity addFriendActivity) {
         this.mDatabase = FirebaseDatabase.getInstance().getReference("users");
         this.authenticationService = new AuthenticationService();
         this.addFriendActivity = addFriendActivity;
