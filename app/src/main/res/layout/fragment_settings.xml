@@ -3,13 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Settings">
+    android:background="@color/colorWhite"
+    tools:context=".SettingsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:textSize="60dp"
+    <View
+        android:id="@+id/view2"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Settings Fragment" />
+        android:layout_height="102dp"
+        android:background="#ffa000"
+        tools:layout_editor_absoluteX="174dp" />
+
+    <TextView
+        android:id="@+id/settings_textView"
+        android:layout_width="358dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/colorWhite"
+        android:textSize="46sp"
+        android:text="Settings" />
 
 </FrameLayout>
