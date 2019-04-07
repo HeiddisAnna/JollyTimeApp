@@ -62,7 +62,9 @@ public class EventDatabaseService {
                     }
                 });
 
-        mUsersDatabase.child(userID).setValue(eventID)
+        DatabaseReference pushedUserEvent = mUsersDatabase.child(userID).push();
+
+        pushedUserEvent.setValue(userID)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
