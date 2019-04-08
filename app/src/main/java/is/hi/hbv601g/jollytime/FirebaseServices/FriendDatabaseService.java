@@ -26,11 +26,13 @@ public class FriendDatabaseService {
 
     private String friendsEmail;
     private String friendId;
+    private ArrayList<User> friendUsers;
 
     public FriendDatabaseService(AddFriendActivity addFriendActivity) {
         this.mDatabase = FirebaseDatabase.getInstance().getReference("users");
         this.authenticationService = new AuthenticationService();
         this.addFriendActivity = addFriendActivity;
+        this.friendUsers = new ArrayList<User>();
     }
 
 
@@ -45,15 +47,15 @@ public class FriendDatabaseService {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                //ArrayList<DataSnapshot> friendSnaps = new ArrayList<DataSnapshot>();
-                Iterator<DataSnapshot> iterator = dataSnapshot.getChildren().iterator();
-                User user;
-                while (iterator.hasNext()) {
-                    user = iterator.next().getValue(User.class);
+
+                for (DataSnapshot userSnapshot: dataSnapshot.getChildren()) {
+                    User user = userSnapshot.getValue(User.class);
                     if (user.getEmail().equals(friendsEmail)) {
                         addFriendIdToUser(user.getId());
                     }
                 }
+
+
 
             }
 
@@ -67,7 +69,7 @@ public class FriendDatabaseService {
     public void addFriendIdToUser(String friendId) {
         this.friendId = friendId;
         String userId = authenticationService.getCurrentUserId();
-        mDatabase.child(userId).child("friendIds").child(friendId).setValue(true)
+        mDatabase.child(userId).child("friendsID").child(friendId).setValue(true)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -85,7 +87,7 @@ public class FriendDatabaseService {
 
     public void addUserIdToFriend() {
         String userId = authenticationService.getCurrentUserId();
-        mDatabase.child(friendId).child("friendIds").child(userId).setValue(true)
+        mDatabase.child(friendId).child("friendsID").child(userId).setValue(true)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
@@ -99,6 +101,43 @@ public class FriendDatabaseService {
                     }
                 });
 
+    }
+
+    public void getFriendsOfCurrentUser() {
+        String userId = authenticationService.getCurrentUserId();
+        mDatabase.child(userId).child("friendsID")
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for (DataSnapshot userDataSnapshot: dataSnapshot.getChildren()) {
+
+                            getFriendUserOfCurrentUser(userDataSnapshot.getKey());
+                        }
+                    
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+    }
+
+    public void getFriendUserOfCurrentUser(String id) {
+        mDatabase.child(id)
+                .addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        friendUsers.add(dataSnapshot.getValue(User.class));
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
     }
 
 }
