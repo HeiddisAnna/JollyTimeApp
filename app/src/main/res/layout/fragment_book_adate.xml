@@ -90,7 +90,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/title_input" />
 
             <TextView
-                android:id="@+id/timeperiod_Text"
+                android:id="@+id/Text_information"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -107,48 +107,38 @@
                 app:layout_constraintTop_toBottomOf="@+id/dateLength_input"
                 app:layout_constraintVertical_bias="0.26999998" />
 
-            <TextView
-                android:id="@+id/Timeperiod_text"
-                android:layout_width="wrap_content"
+            <EditText
+                android:id="@+id/startDate"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginEnd="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginBottom="8dp"
-                android:text="Start date"
-                app:layout_constraintBottom_toTopOf="@+id/endDate_Text"
-                app:layout_constraintEnd_toStartOf="@+id/startDatePicker"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toStartOf="parent" />
+                android:layout_marginStart="14dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="14dp"
+                android:layout_marginRight="14dp"
+               />
 
 
             <LinearLayout
                 android:id="@+id/addEvent_LinearLayot"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
-                <DatePicker
+                <TextView
                     android:id="@+id/startDatePicker"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="40dp"
                     android:layout_marginStart="8dp"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginRight="0dp"
-                    android:calendarViewShown="false"
-                    android:datePickerMode="spinner"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.625"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/dateLength_input" /><![CDATA[/
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/datePicker1" />
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="8dp"
+                    android:textColorHighlight="@color/colorBlack"
+                    android:text="Click to chose yout start date: yyyy-mm-dd"
+                    app:layout_constraintEnd_toStartOf="@+id/startDatePicker"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent" />
 
-                ]]>
             </LinearLayout>
 
             <TextView
@@ -162,7 +152,6 @@
                 android:layout_marginBottom="8dp"
                 android:text="Start time"
                 app:layout_constraintBottom_toTopOf="@+id/endDate_Text"
-                app:layout_constraintEnd_toStartOf="@+id/startDatePicker"
                 app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent" />
 

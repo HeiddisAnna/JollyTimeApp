@@ -1,23 +1,30 @@
 package is.hi.hbv601g.jollytime.Activities;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.TimePicker;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 import is.hi.hbv601g.jollytime.Services.BookDateService;
+import is.hi.hbv601g.jollytime.Activities.SelectDateFragment;
 
 
 /**
@@ -32,14 +39,18 @@ public class BookADateFragment extends Fragment {
     private EditText mTitle;
     private EditText mDescription;
     Button mBookDateButton;
-    DatePicker mStartDate;
-    DatePicker mEndDate;
+    TextView StartDatePicker;
+    EditText startDate;
+    DialogFragment startDateFragment;
+    /* DatePicker mEndDate;
     TimePicker mStartTime;
-    TimePicker mEndTime;
+    TimePicker mEndTime; */
+
 
     public BookADateFragment() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,26 +63,37 @@ public class BookADateFragment extends Fragment {
         mTitle = (EditText) v.findViewById(R.id.title_input);
         mDescription = (EditText) v.findViewById(R.id.description_input);
 
+        startDate = (EditText) v.findViewById(R.id.startDate);
+        StartDatePicker = (TextView) v.findViewById(R.id.startDatePicker);
+        startDateFragment = new SelectDateFragment();
+
+
+
         // eventDatabaseService = new EventDatabaseService(this);
 
         String title = mTitle.getText().toString();
         String description = mDescription.getText().toString();
         // Allar breytur hér
 
+        StartDatePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startDateFragment.show(getFragmentManager(), "StartDatePicker");
+
+            }
+        });
+
 
         mBookDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
+                String test = ((SelectDateFragment) startDateFragment).getDate();
 
                 String title = mTitle.getText().toString();
                 String description = mDescription.getText().toString();
 
-                mStartDate = (DatePicker)(v.findViewById(R.id.startDatePicker));
-                mEndDate = (DatePicker)(v.findViewById(R.id.endDatePicker));
-                mStartTime = (TimePicker)(v.findViewById(R.id.startTimePicker));
-                mEndTime = (TimePicker)(v.findViewById(R.id.endTimePicker));
-
+                /*
 
                 int startYear = mStartDate.getYear();
                 int startMonth = mStartDate.getMonth();
@@ -92,6 +114,8 @@ public class BookADateFragment extends Fragment {
                 String meStartDate =  "" + startYear + "-" + startMonth + "-" + startDay + ' ' + startHour + ":" + startMin + "" ;
                 String meEndDate = "" + endYear + "-" + endMonth + "-" + endDay + ' ' + endHour + ":" + endMin + "" ;
 
+                */
+
                 List<String> usersID = new ArrayList<String>();
                 usersID.add("EAUUrzlCqFO5KbS8jP8dJnqAhVG2");
                 usersID.add("aTd5KoHabeUZIyp3pcx9yNpqNTE3");
@@ -99,8 +123,8 @@ public class BookADateFragment extends Fragment {
                 // BookDateService bookDateService = new BookDateService(startTimePeriod, endTimePeriod, usersID);
 
 
-                Intent intent = new Intent(getActivity(), CalendarActivity.class);
-                startActivity(intent);
+                // Intent intent = new Intent(getActivity(), CalendarActivity.class);
+                // startActivity(intent);
 
             }
         });
@@ -108,5 +132,5 @@ public class BookADateFragment extends Fragment {
         return v;
     }
 
-
 }
+
