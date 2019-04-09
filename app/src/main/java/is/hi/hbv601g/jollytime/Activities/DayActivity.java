@@ -8,7 +8,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-public class DayActivity extends AppCompatActivity {
+import is.hi.hbv601g.jollytime.FirebaseServices.EventDatabaseService;
+import is.hi.hbv601g.jollytime.Models.Event;
+
+public class DayActivity extends AppCompatActivity implements EventDatabaseService.EventDatabaseServiceDelegate {
+
+    private EventDatabaseService eventDatabaseService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,5 +41,22 @@ public class DayActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        this.eventDatabaseService = new EventDatabaseService(this);
+        this.eventDatabaseService.getUserEvents();
+    }
+
+    public boolean isEventOnDate(Event event) {
+        TextView dateTextView = findViewById(R.id.date_DayTextView);
+        TextView yearTextView = findViewById(R.id.year_dayTextView);
+        // ...
+        return false;
+    }
+
+    @Override
+    public void updateEvent(Event event) {
+        if (isEventOnDate(event)) {
+            // TODO: implement
+        }
     }
 }

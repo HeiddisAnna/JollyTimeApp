@@ -14,9 +14,10 @@ import android.widget.Toast;
 import java.util.GregorianCalendar;
 
 import is.hi.hbv601g.jollytime.FirebaseServices.EventDatabaseService;
+import is.hi.hbv601g.jollytime.Models.Event;
 import is.hi.hbv601g.jollytime.Services.CreateEventService;
 
-public class CreateEventActivity extends AppCompatActivity {
+public class CreateEventActivity extends AppCompatActivity implements EventDatabaseService.EventDatabaseServiceDelegate {
 
     private EditText mTitle;
     private EditText mDescription;
@@ -90,5 +91,11 @@ public class CreateEventActivity extends AppCompatActivity {
     public void startAfterEnd() {
         Toast.makeText(CreateEventActivity.this, "Start date must be before end date.",
                 Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void updateEvent(Event event) {
+        // Ignore this dummy empty implementation.
+        // Needed to implement EventDatabaseService.EventDatabaseServiceDelegate interface
     }
 }

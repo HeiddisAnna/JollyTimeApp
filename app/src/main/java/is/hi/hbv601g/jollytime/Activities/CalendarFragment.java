@@ -21,12 +21,16 @@ import java.util.Calendar;
 
 import is.hi.hbv601g.jollytime.Decorators.CurrentDayDecorator;
 import is.hi.hbv601g.jollytime.Decorators.EventDecorator;
+import is.hi.hbv601g.jollytime.FirebaseServices.EventDatabaseService;
+import is.hi.hbv601g.jollytime.Models.Event;
 
 
-public class CalendarFragment extends Fragment {
+public class CalendarFragment extends Fragment implements EventDatabaseService.EventDatabaseServiceDelegate {
 
     Button goToDay_button;
     Button addEvents_button;
+
+    EventDatabaseService eventDatabaseService;
 
     public CalendarFragment() {
         // Required empty public constructor
@@ -104,9 +108,7 @@ public class CalendarFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
+    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -195,7 +197,14 @@ public class CalendarFragment extends Fragment {
             }
         });
 
+        this.eventDatabaseService = new EventDatabaseService(this);
+        this.eventDatabaseService.getUserEvents();
+
         return v;
     }
 
+    @Override
+    public void updateEvent(Event event) {
+        // TODO: Implement
+    }
 }
