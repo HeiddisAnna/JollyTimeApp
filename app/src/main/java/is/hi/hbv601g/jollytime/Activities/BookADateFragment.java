@@ -1,12 +1,26 @@
 package is.hi.hbv601g.jollytime.Activities;
 
-import android.content.Context;
-import android.net.Uri;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
+
+import is.hi.hbv601g.jollytime.Services.BookDateService;
+import is.hi.hbv601g.jollytime.Activities.SelectDateFragment;
+import is.hi.hbv601g.jollytime.Activities.SelectTimeFragment;
 
 
 /**
@@ -18,85 +32,136 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class BookADateFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private EditText mTitle;
+    private EditText mDescription;
+    Button mBookDateButton;
+    TextView startDatePicker;
+    TextView startTimePicker;
+    TextView endDatePicker;
+    TextView endTimePicker;
+    DialogFragment startDateFragment;
+    DialogFragment startTimeFragment;
+    DialogFragment endDateFragment;
+    DialogFragment endTimeFragment;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
 
     public BookADateFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment BookADateFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static BookADateFragment newInstance(String param1, String param2) {
-        BookADateFragment fragment = new BookADateFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_book_adate, container, false);
+        View v = inflater.inflate(R.layout.fragment_book_adate, container, false);
+
+        // Allar breytur hér
+        mBookDateButton = (Button) v.findViewById(R.id.book_date_button);
+        mTitle = (EditText) v.findViewById(R.id.title_input);
+        mDescription = (EditText) v.findViewById(R.id.description_input);
+
+        startDatePicker = (TextView) v.findViewById(R.id.startDatePicker);
+        startDateFragment = new SelectDateFragment();
+
+        startTimePicker = (TextView) v.findViewById(R.id.startTimePicker);
+        startTimeFragment = new SelectTimeFragment();
+
+        endDatePicker = (TextView) v.findViewById(R.id.endDatePicker);
+        endDateFragment = new SelectDateFragment();
+
+        endTimePicker = (TextView) v.findViewById(R.id.endTimePicker);
+        endTimeFragment = new SelectTimeFragment();
+
+
+
+        // eventDatabaseService = new EventDatabaseService(this);
+
+        String title = mTitle.getText().toString();
+        String description = mDescription.getText().toString();
+        // Allar breytur hér
+
+        startDatePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startDateFragment.show(getFragmentManager(), "startDatePicker");
+            }
+        });
+
+        startTimePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startTimeFragment.show(getFragmentManager(), "startTimePicker");
+
+            }
+        });
+
+        endDatePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                endDateFragment.show(getFragmentManager(), "endDatePicker");
+            }
+        });
+
+        endTimePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                endTimeFragment.show(getFragmentManager(), "endTimePicker");
+            }
+        });
+
+
+        mBookDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                String startDate = ((SelectDateFragment) startDateFragment).getDate();
+                String startTime = ((SelectTimeFragment) startTimeFragment).getTime();
+                String endDate = ((SelectDateFragment) endDateFragment).getDate();
+                String endTime = ((SelectTimeFragment) endTimeFragment).getTime();
+
+                String title = mTitle.getText().toString();
+                String description = mDescription.getText().toString();
+
+                int startYear = ((SelectDateFragment) startDateFragment).getYear();
+                int startMonth = ((SelectDateFragment) startDateFragment).getMonth();
+                int startDay = ((SelectDateFragment) startDateFragment).getDay();
+                int startHour = ((SelectTimeFragment) startTimeFragment).getHour();
+                int startMin = ((SelectTimeFragment) startTimeFragment).getMin();
+
+                int endYear = ((SelectDateFragment) endDateFragment).getYear();
+                int endMonth = ((SelectDateFragment) endDateFragment).getMonth();
+                int endDay = ((SelectDateFragment) endDateFragment).getDay();
+                int endHour = ((SelectTimeFragment) endTimeFragment).getHour();
+                int endMin = ((SelectTimeFragment) endTimeFragment).getMin();
+
+                Timestamp startTimePeriod = new Timestamp(startYear, startMonth, startDay, startHour, startMin, 0 ,0);
+                Timestamp endTimePeriod = new Timestamp(endYear, endMonth, endDay, endHour, endMin, 0, 0);
+
+
+                List<String> usersID = new ArrayList<String>();
+                usersID.add("EAUUrzlCqFO5KbS8jP8dJnqAhVG2");
+                usersID.add("aTd5KoHabeUZIyp3pcx9yNpqNTE3");
+
+                BookDateService bookDateService = new BookDateService(startTimePeriod, endTimePeriod, usersID, 180);
+
+                if(bookDateService.rightDate()) {
+                    bookDateService.findCommonTimeperiod();
+                    Intent intent = new Intent(getActivity(), CalendarActivity.class);
+                    startActivity(intent);
+
+                } else {
+                    startAfterEnd();
+                }
+            }
+        });
+
+        return v;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
+    public void startAfterEnd() {
+
     }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onFragmentInteraction(Uri uri);
-    }
 }
+

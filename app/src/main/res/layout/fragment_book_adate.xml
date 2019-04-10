@@ -1,29 +1,190 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
     tools:context=".BookADateFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-
-    <View
-        android:id="@+id/view2"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="102dp"
-        android:background="#ffa000"
-        tools:layout_editor_absoluteX="174dp" />
+        android:layout_height="120dp"
+        android:background="@color/colorPrimary"
+        android:orientation="vertical"
+        android:paddingTop="0dp"
+        android:paddingBottom="0dp">
 
-    <TextView
-        android:id="@+id/bookADate_textView"
-        android:layout_width="358dp"
-        android:layout_height="72dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="20dp"
-        android:textColor="@color/colorWhite"
-        android:textSize="46sp"
-        android:text="Book a Date" />
 
-</FrameLayout>
+        <TextView
+            android:id="@+id/date_DayTextView"
+            android:layout_width="360dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="26dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:text="Book a date"
+            android:textColor="@color/colorWhite"
+            android:textSize="46sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/year_dayTextView" />
+
+        <View
+            android:id="@+id/view"
+            android:layout_width="match_parent"
+            android:layout_height="192dp"
+            android:background="#ffa000"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:layout_editor_absoluteX="0dp" />
+    </LinearLayout>
+
+
+    <ScrollView
+        android:layout_marginTop="125dp"
+        android:scrollbars="none"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="137dp"
+        tools:layout_editor_absoluteY="0dp">
+
+        <LinearLayout
+            android:id="@+id/addEvent_LinearLayot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <EditText
+                android:id="@+id/title_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginRight="16dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Title"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <EditText
+                android:id="@+id/description_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="14dp"
+                android:layout_marginLeft="14dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="14dp"
+                android:layout_marginRight="14dp"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:hint="Description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/title_input" />
+
+            <TextView
+                android:id="@+id/Text_information"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="31dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="0dp"
+                android:layout_marginBottom="8dp"
+                android:text="Select timeperiod for your date:"
+                app:layout_constraintBottom_toTopOf="@+id/Timeperiod_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.08"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/dateLength_input"
+                app:layout_constraintVertical_bias="0.26999998" />
+
+
+                <TextView
+                    android:id="@+id/startDatePicker"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="8dp"
+                    android:textColorHighlight="@color/colorBlack"
+                    android:text="Click to chose yout start date"
+                    app:layout_constraintEnd_toStartOf="@+id/startDatePicker"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <TextView
+                    android:id="@+id/startTimePicker"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="8dp"
+                    android:textColorHighlight="@color/colorBlack"
+                    android:text="Click to chose yout start time"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/endDatePicker"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="8dp"
+                    android:textColorHighlight="@color/colorBlack"
+                    android:text="Click to chose your end date"
+                    app:layout_constraintEnd_toStartOf="@+id/endDatePicker"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+
+                <TextView
+                    android:id="@+id/endTimePicker"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/colorBlack"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginEnd="30dp"
+                    android:layout_marginRight="30dp"
+                    android:layout_marginBottom="8dp"
+                    android:textColorHighlight="@color/colorBlack"
+                    android:text="Click to chose your end time"
+                    app:layout_constraintEnd_toStartOf="@+id/endTimePicker"
+                    app:layout_constraintHorizontal_bias="1.0"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+            <Button
+                android:id="@+id/book_date_button"
+                android:layout_width="wrap_content"
+                android:layout_height="41dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:text="Book a Date"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/endDatePicker" />
+
+        </LinearLayout>
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>
