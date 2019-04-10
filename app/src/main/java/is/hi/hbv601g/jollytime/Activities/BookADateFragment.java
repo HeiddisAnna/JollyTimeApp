@@ -1,22 +1,15 @@
 package is.hi.hbv601g.jollytime.Activities;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.TimePicker;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -25,6 +18,7 @@ import java.util.List;
 
 import is.hi.hbv601g.jollytime.Services.BookDateService;
 import is.hi.hbv601g.jollytime.Activities.SelectDateFragment;
+import is.hi.hbv601g.jollytime.Activities.SelectTimeFragment;
 
 
 /**
@@ -39,12 +33,14 @@ public class BookADateFragment extends Fragment {
     private EditText mTitle;
     private EditText mDescription;
     Button mBookDateButton;
-    TextView StartDatePicker;
-    EditText startDate;
+    TextView startDatePicker;
+    TextView startTimePicker;
+    TextView endDatePicker;
+    TextView endTimePicker;
     DialogFragment startDateFragment;
-    /* DatePicker mEndDate;
-    TimePicker mStartTime;
-    TimePicker mEndTime; */
+    DialogFragment startTimeFragment;
+    DialogFragment endDateFragment;
+    DialogFragment endTimeFragment;
 
 
     public BookADateFragment() {
@@ -63,9 +59,17 @@ public class BookADateFragment extends Fragment {
         mTitle = (EditText) v.findViewById(R.id.title_input);
         mDescription = (EditText) v.findViewById(R.id.description_input);
 
-        startDate = (EditText) v.findViewById(R.id.startDate);
-        StartDatePicker = (TextView) v.findViewById(R.id.startDatePicker);
+        startDatePicker = (TextView) v.findViewById(R.id.startDatePicker);
         startDateFragment = new SelectDateFragment();
+
+        startTimePicker = (TextView) v.findViewById(R.id.startTimePicker);
+        startTimeFragment = new SelectTimeFragment();
+
+        endDatePicker = (TextView) v.findViewById(R.id.endDatePicker);
+        endDateFragment = new SelectDateFragment();
+
+        endTimePicker = (TextView) v.findViewById(R.id.endTimePicker);
+        endTimeFragment = new SelectTimeFragment();
 
 
 
@@ -75,11 +79,32 @@ public class BookADateFragment extends Fragment {
         String description = mDescription.getText().toString();
         // Allar breytur hér
 
-        StartDatePicker.setOnClickListener(new View.OnClickListener() {
+        startDatePicker.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startDateFragment.show(getFragmentManager(), "StartDatePicker");
+                startDateFragment.show(getFragmentManager(), "startDatePicker");
+            }
+        });
 
+        startTimePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startTimeFragment.show(getFragmentManager(), "startTimePicker");
+
+            }
+        });
+
+        endDatePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                endDateFragment.show(getFragmentManager(), "endDatePicker");
+            }
+        });
+
+        endTimePicker.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                endTimeFragment.show(getFragmentManager(), "endTimePicker");
             }
         });
 
@@ -88,24 +113,25 @@ public class BookADateFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                String test = ((SelectDateFragment) startDateFragment).getDate();
+                String startDate = ((SelectDateFragment) startDateFragment).getDate();
+                String startTime = ((SelectTimeFragment) startTimeFragment).getTime();
+                String endDate = ((SelectDateFragment) endDateFragment).getDate();
+                String endTime = ((SelectTimeFragment) endTimeFragment).getTime();
 
                 String title = mTitle.getText().toString();
                 String description = mDescription.getText().toString();
 
-                /*
+                int startYear = ((SelectDateFragment) startDateFragment).getYear();
+                int startMonth = ((SelectDateFragment) startDateFragment).getMonth();
+                int startDay = ((SelectDateFragment) startDateFragment).getDay();
+                int startHour = ((SelectTimeFragment) startTimeFragment).getHour();
+                int startMin = ((SelectTimeFragment) startTimeFragment).getMin();
 
-                int startYear = mStartDate.getYear();
-                int startMonth = mStartDate.getMonth();
-                int startDay = mStartDate.getDayOfMonth();
-                int startHour = mStartTime.getHour();
-                int startMin = mStartTime.getMinute();
-
-                int endYear = mEndDate.getYear();
-                int endMonth = mEndDate.getMonth();
-                int endDay = mEndDate.getDayOfMonth();
-                int endHour = mEndTime.getHour();
-                int endMin = mEndTime.getMinute();
+                int endYear = ((SelectDateFragment) endDateFragment).getYear();
+                int endMonth = ((SelectDateFragment) endDateFragment).getMonth();
+                int endDay = ((SelectDateFragment) endDateFragment).getMonth();
+                int endHour = ((SelectTimeFragment) endTimeFragment).getHour();
+                int endMin = ((SelectTimeFragment) endTimeFragment).getMin();
 
 
                 GregorianCalendar startTimePeriod = new GregorianCalendar(startYear, startMonth, startDay, startHour, startMin);
@@ -114,17 +140,17 @@ public class BookADateFragment extends Fragment {
                 String meStartDate =  "" + startYear + "-" + startMonth + "-" + startDay + ' ' + startHour + ":" + startMin + "" ;
                 String meEndDate = "" + endYear + "-" + endMonth + "-" + endDay + ' ' + endHour + ":" + endMin + "" ;
 
-                */
-
                 List<String> usersID = new ArrayList<String>();
                 usersID.add("EAUUrzlCqFO5KbS8jP8dJnqAhVG2");
                 usersID.add("aTd5KoHabeUZIyp3pcx9yNpqNTE3");
 
-                // BookDateService bookDateService = new BookDateService(startTimePeriod, endTimePeriod, usersID);
+                BookDateService bookDateService = new BookDateService(startTimePeriod, endTimePeriod, usersID);
+
+                bookDateService.findCommonTimeperiod();
 
 
-                // Intent intent = new Intent(getActivity(), CalendarActivity.class);
-                // startActivity(intent);
+                Intent intent = new Intent(getActivity(), CalendarActivity.class);
+                startActivity(intent);
 
             }
         });

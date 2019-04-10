@@ -33,12 +33,24 @@ public class SelectDateFragment extends DialogFragment implements DatePickerDial
         this.year = year;
         this.month = month;
         this.day = day;
-
-        String test = year + "-" + month + "-" + day;
     }
 
     public String getDate(){
         return year + "-" + month + "-" + day;
     }
+
+    public int getYear(){
+        return year;
+    }
+
+    public int getMonth(){
+        return month;
+    }
+
+    public int getDay(){
+        return day;
+    }
+
+
 
 }

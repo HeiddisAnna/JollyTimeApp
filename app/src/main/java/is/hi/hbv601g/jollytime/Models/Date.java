@@ -21,7 +21,13 @@ public class Date {
         this.description = description;
         this.startTime = startTime;
         this.endTime = endTime;
+    }
 
+    public Date(GregorianCalendar startTime, GregorianCalendar endTime) {
+        this.title = title;
+        this.description = description;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public Long getId() {
