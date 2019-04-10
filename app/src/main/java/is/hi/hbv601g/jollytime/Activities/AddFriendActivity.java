@@ -7,7 +7,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import is.hi.hbv601g.jollytime.FirebaseServices.FriendDatabaseService;
+import is.hi.hbv601g.jollytime.Models.Event;
 import is.hi.hbv601g.jollytime.Services.AddFriend;
 
 public class AddFriendActivity extends AppCompatActivity {
@@ -27,13 +30,13 @@ public class AddFriendActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_friend);
 
-        mAddFriendButton = (Button) findViewById(R.id.addFriend_button);
+        mAddFriendButton = (Button) findViewById(R.id.addefriend_button);
          friendDatabaseService = new FriendDatabaseService(this);
 
         mAddFriendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //mEmailInput = (EditText) findViewById(R.id.friends_email_input);
+                mEmailInput = (EditText) findViewById(R.id.friends_email_input);
 
                 email = mEmailInput.getText().toString();
                 friendDatabaseService.addFriend(email);
@@ -49,5 +52,9 @@ public class AddFriendActivity extends AppCompatActivity {
     public void onAddingFriendFail() {
         Toast.makeText(AddFriendActivity.this, "Adding this friend failed",
                 Toast.LENGTH_SHORT).show();
+    }
+
+    public void bull(ArrayList<Event> events) {
+
     }
 }

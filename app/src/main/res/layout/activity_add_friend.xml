@@ -1,28 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AddFriendActivity">
 
-    <Button
-        android:id="@+id/addFriend_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add Friend"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="453dp" />
-
     <EditText
         android:id="@+id/friends_email_input"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Friends Email"
-        android:inputType="textEmailAddress"
-        tools:layout_editor_absoluteX="98dp"
-        tools:layout_editor_absoluteY="231dp" />
-</android.support.constraint.ConstraintLayout>
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:iconifiedByDefault="false"
+        android:background="@color/colorAccent"
+        android:hint=" Search and Add New Friends"
+        android:drawableRight="@drawable/ic_search_black_24dp"
+        android:drawablePadding="5dp"
+
+        />
+
+    <Button
+        android:id="@+id/addefriend_button"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="24dp"
+        android:layout_below="@+id/friends_email_input"
+        android:background="@drawable/whitecircle_button"
+        android:text="+"
+        android:textColor="@color/colorAccent"
+        android:textSize="40dp" />
+
+
+</RelativeLayout>

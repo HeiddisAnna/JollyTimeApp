@@ -8,6 +8,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -24,12 +25,15 @@ public class User implements Serializable {
     private String password;
 
     private List<String> events;
-    private String eventsID;
+    //private String eventsID;
 
     private List<String> dates;
 
     private List<String> friends;
-    private String friendsID;
+    //private String friendsID;
+
+    private HashMap<String, Boolean> eventsID;
+    private HashMap<String, Boolean> friendsID;
 
 
     private List<Notification> notifications;
@@ -46,8 +50,16 @@ public class User implements Serializable {
         this.email = email;
         this.name = name;
         this.id = id;
-        this.eventsID = "";
-        this.friendsID = "";
+        this.eventsID = new HashMap<String, Boolean>();
+        this.friendsID = new HashMap<String, Boolean>();
+    }
+
+    public User(String email, String name, String id, HashMap<String, Boolean> eventsID, HashMap<String, Boolean> friendsID) {
+        this.email = email;
+        this.name = name;
+        this.id = id;
+        this.eventsID = eventsID;
+        this.friendsID = friendsID;
     }
 
     public String getName() {
@@ -62,23 +74,20 @@ public class User implements Serializable {
         this.name = name;
     }
 
-    public void setEvents (final String eventsID) {
-        events.add(eventsID);
-    }
 
-    public String getEventsID() {
+    public HashMap<String, Boolean> getEventsID() {
         return this.eventsID;
     }
 
-    public void setEventsID (final String eventsID) {
+    public void setEventsID ( HashMap<String, Boolean> eventsID) {
         this.eventsID = eventsID;
     }
 
-    public String getFriendsID() {
+    public HashMap<String, Boolean> getFriendsID() {
         return this.friendsID;
     }
 
-    public void setFriendsID (final String friendsID) {
+    public void setFriendsID (HashMap<String, Boolean> friendsID) {
         this.friendsID = friendsID;
     }
 
