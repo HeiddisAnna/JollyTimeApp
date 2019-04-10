@@ -10,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -129,33 +131,36 @@ public class BookADateFragment extends Fragment {
 
                 int endYear = ((SelectDateFragment) endDateFragment).getYear();
                 int endMonth = ((SelectDateFragment) endDateFragment).getMonth();
-                int endDay = ((SelectDateFragment) endDateFragment).getMonth();
+                int endDay = ((SelectDateFragment) endDateFragment).getDay();
                 int endHour = ((SelectTimeFragment) endTimeFragment).getHour();
                 int endMin = ((SelectTimeFragment) endTimeFragment).getMin();
 
+                Timestamp startTimePeriod = new Timestamp(startYear, startMonth, startDay, startHour, startMin, 0 ,0);
+                Timestamp endTimePeriod = new Timestamp(endYear, endMonth, endDay, endHour, endMin, 0, 0);
 
-                GregorianCalendar startTimePeriod = new GregorianCalendar(startYear, startMonth, startDay, startHour, startMin);
-                GregorianCalendar endTimePeriod = new GregorianCalendar(endYear, endMonth, endDay, endHour, endMin);
-
-                String meStartDate =  "" + startYear + "-" + startMonth + "-" + startDay + ' ' + startHour + ":" + startMin + "" ;
-                String meEndDate = "" + endYear + "-" + endMonth + "-" + endDay + ' ' + endHour + ":" + endMin + "" ;
 
                 List<String> usersID = new ArrayList<String>();
                 usersID.add("EAUUrzlCqFO5KbS8jP8dJnqAhVG2");
                 usersID.add("aTd5KoHabeUZIyp3pcx9yNpqNTE3");
 
-                BookDateService bookDateService = new BookDateService(startTimePeriod, endTimePeriod, usersID);
+                BookDateService bookDateService = new BookDateService(startTimePeriod, endTimePeriod, usersID, 180);
 
-                bookDateService.findCommonTimeperiod();
+                if(bookDateService.rightDate()) {
+                    bookDateService.findCommonTimeperiod();
+                    Intent intent = new Intent(getActivity(), CalendarActivity.class);
+                    startActivity(intent);
 
-
-                Intent intent = new Intent(getActivity(), CalendarActivity.class);
-                startActivity(intent);
-
+                } else {
+                    startAfterEnd();
+                }
             }
         });
 
         return v;
+    }
+
+    public void startAfterEnd() {
+
     }
 
 }

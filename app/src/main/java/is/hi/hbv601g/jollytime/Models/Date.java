@@ -1,5 +1,6 @@
 package is.hi.hbv601g.jollytime.Models;
 
+import java.sql.Timestamp;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -9,23 +10,21 @@ public class Date {
     public long id;
     private String title;
     private String description;
-    private GregorianCalendar startTime;
-    private GregorianCalendar endTime;
+    private Timestamp startTime;
+    private Timestamp endTime;
 
     private List<User> user;
 
     public Date() {}
 
-    public Date(String title, String description, GregorianCalendar startTime, GregorianCalendar endTime) {
+    public Date(String title, String description, Timestamp startTime, Timestamp endTime) {
         this.title = title;
         this.description = description;
         this.startTime = startTime;
         this.endTime = endTime;
     }
 
-    public Date(GregorianCalendar startTime, GregorianCalendar endTime) {
-        this.title = title;
-        this.description = description;
+    public Date(Timestamp startTime, Timestamp endTime) {
         this.startTime = startTime;
         this.endTime = endTime;
     }
@@ -46,11 +45,11 @@ public class Date {
         return description;
     }
 
-    public GregorianCalendar getStartTime() {
+    public Timestamp getStartTime() {
         return startTime;
     }
 
-    public GregorianCalendar getEndTime() {
+    public Timestamp getEndTime() {
         return endTime;
     }
 }
