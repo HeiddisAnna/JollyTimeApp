@@ -83,12 +83,15 @@ public class BookDateService {
 
         for(int j= 0; j<eventsID.size(); j++){
             String event = eventsID.get(j);
-            magigFunction(eventsID.get(j), freetime);
+            magigFunction(eventsID.get(j));
         }
         int i = 0;
     }
 
-    public void magigFunction(String eventID, List<Date> timeperiod) {
+    public void magigFunction(String eventID) {
+        List<Date> timeperiod = freetime;
+        freetime.clear();
+
         String mStartTime = mDatabase.child(eventID).child("startDate").getKey();
         Timestamp startTime = new Timestamp(Long.parseLong(mStartTime));
 
@@ -103,16 +106,20 @@ public class BookDateService {
             Timestamp endPeriod = timeperiod.get(i).getEndTime();
 
             if(endTime.before(startPeriod) || endPeriod.before(startTime)) {
-                break;
+                result.add(timeperiod.get(i));
             } else {
-                if(startPeriod.after(startTime)) {
+                if(startPeriod.after(startTime) && startPeriod.before(endTime)) {
                     result.add(new Date(endTime, endPeriod));
                 } else {
-                    if( endPeriod.before(endTime)){
-                        result.add(new Date(startPeriod, startTime));
+                    if(startPeriod.after(endTime)) {
+                        result.add(new Date(startPeriod, endPeriod));
                     } else {
-                        result.add(new Date(startPeriod,startTime));
-                        result.add(new Date(endTime,endPeriod));
+                        if (endPeriod.before(endTime)) {
+                            result.add(new Date(startPeriod, startTime));
+                        } else {
+                            result.add(new Date(startPeriod, startTime));
+                            result.add(new Date(endTime, endPeriod));
+                        }
                     }
                 }
             }
