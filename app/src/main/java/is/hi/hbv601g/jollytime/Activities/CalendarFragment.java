@@ -113,6 +113,7 @@ public class CalendarFragment extends Fragment implements EventDatabaseService.E
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_calendar, container, false);
 
@@ -134,13 +135,17 @@ public class CalendarFragment extends Fragment implements EventDatabaseService.E
         addEvents_button.setVisibility(Button.VISIBLE);
 
         // get date from cal
-        final String year = String.valueOf(cal.get(Calendar.YEAR));
-        String dayOfWeek;
-        String month;
+        int month = cal.get(Calendar.MONTH);
+        int year = cal.get(Calendar.YEAR);
         int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
+        int hour = cal.get(Calendar.HOUR);
+        int minutes = cal.get(Calendar.MINUTE);
 
+        String dayOfWeek;
+        String monthText;
+        final String yearString = String.valueOf(year);
         dayOfWeek = getDayOfWeek(cal.get(Calendar.DAY_OF_WEEK));
-        month = getMonth(cal.get(Calendar.MONTH));
+        monthText = getMonth(cal.get(Calendar.MONTH));
 
         // Initialize material calendarView
         calendarView.state().edit()
@@ -150,10 +155,14 @@ public class CalendarFragment extends Fragment implements EventDatabaseService.E
                 .setCalendarDisplayMode(CalendarMode.MONTHS)
                 .commit();
 
-        final String selectedDate = String.format("%s, %s %s", dayOfWeek.substring(0, 3), month.substring(0, 3), String.valueOf(dayOfMonth));
+        final String selectedDate = String.format("%s, %s %s", dayOfWeek.substring(0, 3), monthText.substring(0, 3), String.valueOf(dayOfMonth));
 
-        yearText.setText(year);
+        yearText.setText(yearString);
         dateText.setText(selectedDate);
+
+        // Calendar selectedCalendarDate = Calendar.getInstance();
+        // selectedCalendarDate.set(year, month, dayOfMonth, hour, minutes);
+        // final String selectedDateInMillis = String.valueOf(selectedCalendarDate.getTimeInMillis());
 
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
@@ -169,6 +178,7 @@ public class CalendarFragment extends Fragment implements EventDatabaseService.E
                 String monthName = getMonth(month);
                 String dayOfWeek = getDayOfWeek(calendar.get(Calendar.DAY_OF_WEEK));
 
+
                 String date = String.format("%s, %s %s", dayOfWeek.substring(0, 3), monthName.substring(0, 3), String.valueOf(dayOfMonth));
                 String yearString = Integer.toString(year);
 
@@ -182,7 +192,8 @@ public class CalendarFragment extends Fragment implements EventDatabaseService.E
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), DayActivity.class);
                 intent.putExtra("date", selectedDate);
-                intent.putExtra("year", year);
+                intent.putExtra("year", yearString);
+                //intent.putExtra("selectedDateInMillis", selectedDateInMillis);
                 startActivity(intent);
             }
         });
@@ -192,7 +203,7 @@ public class CalendarFragment extends Fragment implements EventDatabaseService.E
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), CreateEventActivity.class);
                 intent.putExtra("date", selectedDate);
-                intent.putExtra("year", year);
+                intent.putExtra("year", yearString);
                 startActivity(intent);
             }
         });

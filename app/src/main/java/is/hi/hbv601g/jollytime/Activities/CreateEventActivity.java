@@ -3,6 +3,7 @@ package is.hi.hbv601g.jollytime.Activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.format.Time;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -11,7 +12,7 @@ import android.widget.EditText;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.util.GregorianCalendar;
+import java.util.Calendar;
 
 import is.hi.hbv601g.jollytime.FirebaseServices.EventDatabaseService;
 import is.hi.hbv601g.jollytime.Models.Event;
@@ -71,15 +72,25 @@ public class CreateEventActivity extends AppCompatActivity implements EventDatab
                 int endHour = mEndTime.getHour();
                 int endMin = mEndTime.getMinute();
 
-                String meStartDate =  "" + startYear + "-" + startMonth + "-" + startDay + ' ' + startHour + ":" + startMin + "" ;
-                String meEndDate = "" + endYear + "-" + endMonth + "-" + endDay + ' ' + endHour + ":" + endMin + "" ;
+                // Get date and time from DatePicker and TimePicker and return in millisec
+                Calendar calStart = Calendar.getInstance();
+                Calendar calEnd = Calendar.getInstance();
+                calStart.set(startYear, startMonth, startDay, startHour, startMin);
+                calEnd.set(endYear, endMonth, endDay, endHour, endMin);
+                String myStartDate = String.valueOf(calStart.getTimeInMillis());
+                String myEndDate = String.valueOf(calEnd.getTimeInMillis());
+
+
+
+                //String meStartDate =  "" + startYear + "-" + startMonth + "-" + startDay + ' ' + startHour + ":" + startMin + "" ;
+                //String meEndDate = "" + endYear + "-" + endMonth + "-" + endDay + ' ' + endHour + ":" + endMin + "" ;
 
                 createEventService = new CreateEventService(startYear, startMonth, startDay,
                         startHour, startMin, endYear, endMonth, endDay, endHour, endMin);
 
 
                 if(createEventService.rightDate()) {
-                    eventDatabaseService.saveNewEvent(title, description, meStartDate, meEndDate);
+                    eventDatabaseService.saveNewEvent(title, description, myStartDate, myEndDate);
                     Intent intent = new Intent(CreateEventActivity.this, CalendarActivity.class);
                     startActivity(intent);
                 } else {

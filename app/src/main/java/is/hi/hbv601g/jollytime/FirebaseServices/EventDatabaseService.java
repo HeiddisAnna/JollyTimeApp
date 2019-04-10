@@ -36,7 +36,7 @@ public class EventDatabaseService {
     private EventDatabaseServiceDelegate delegate;
 
 
-    public EventDatabaseService(EventDatabaseServiceDelegate activity) {
+    public EventDatabaseService(EventDatabaseServiceDelegate delegate) {
         this.mDatabase = FirebaseDatabase.getInstance().getReference("events");
         this.mUsersDatabase = FirebaseDatabase.getInstance().getReference("users");
         this.authenticationService = new AuthenticationService();
@@ -58,9 +58,9 @@ public class EventDatabaseService {
                     mDatabase.child(eventsID).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Event event = new Event(dataSnapshot.child("title").getKey(), dataSnapshot.child("description").getKey(),
-                                    dataSnapshot.child("startDate").getKey(), dataSnapshot.child("endDate").getKey(),
-                                    dataSnapshot.child("userID").getKey());
+                            Event event = new Event(dataSnapshot.child("title").getValue(String.class), dataSnapshot.child("description").getValue(String.class),
+                                    dataSnapshot.child("startDate").getValue(String.class), dataSnapshot.child("endDate").getValue(String.class),
+                                    dataSnapshot.child("userID").getValue(String.class));
                             delegate.updateEvent(event);
                         }
 
@@ -78,12 +78,12 @@ public class EventDatabaseService {
         });
     }
 
-    public void saveNewEvent(String title, String description, String meStartDate, String meEndDate) {
+    public void saveNewEvent(String title, String description, String myStartDate, String myEndDate) {
 
 
         String userID = authenticationService.getCurrentUserId();
 
-        Event event = new Event(title, description, meStartDate, meEndDate, userID);
+        Event event = new Event(title, description, myStartDate, myEndDate, userID);
 
         DatabaseReference pushedEventRef = mDatabase.push();
         String eventID = pushedEventRef.getKey();
