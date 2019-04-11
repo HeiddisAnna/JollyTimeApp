@@ -52,6 +52,22 @@
         tools:layout_editor_absoluteX="137dp"
         tools:layout_editor_absoluteY="0dp">
 
+        <TextView
+            android:id="@+id/availableDates"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+            <xs:element name="dates" type="valuelist"/>
+
+            <xs:simpleType name="valuelist">
+                <xs:list itemType="xs:string"/>
+            </xs:simpleType>
+
+        </xs:schema>
+
+
     <Button
         android:id="@+id/goToCalendar"
         android:layout_marginTop="170dp"

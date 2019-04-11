@@ -24,6 +24,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 import is.hi.hbv601g.jollytime.Models.Date;
+import is.hi.hbv601g.jollytime.Models.ManyDates;
 import is.hi.hbv601g.jollytime.Models.Tuple;
 import is.hi.hbv601g.jollytime.Services.AsyncUtils;
 import is.hi.hbv601g.jollytime.Services.BookDateService;
@@ -51,6 +52,7 @@ public class BookADateFragment extends Fragment {
     DialogFragment startTimeFragment;
     DialogFragment endDateFragment;
     DialogFragment endTimeFragment;
+    private List<Date> finalFreeTime;
 
 
     public BookADateFragment() {
@@ -223,12 +225,20 @@ public class BookADateFragment extends Fragment {
             }
         }
 
-        List<Date> temp = freetime;
+        finalFreeTime= freetime;
+
+        DatesActivity datesActivity = new DatesActivity(freetime);
+        ManyDates dates = new ManyDates(freetime);
 
         Intent intent = new Intent(getActivity(), DatesActivity.class);
+        // intent.putExtra("dates", "TestText");
         startActivity(intent);
 
+    }
 
+
+    public List<Date> getFinalFreeTime(){
+        return finalFreeTime;
     }
 
 
