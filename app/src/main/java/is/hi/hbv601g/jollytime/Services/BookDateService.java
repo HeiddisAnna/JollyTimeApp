@@ -137,7 +137,7 @@ public class BookDateService {
     }
 
 
-    public List<Date> magigFunction(Tuple<String, String> event, List<Date> freetime ) {
+    public List<Date> magigFunction(Tuple<String, String> event) {
         List<Date> timeperiod = freetime;
 
         Timestamp startTime = new Timestamp(Long.parseLong(event.x));

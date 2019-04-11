@@ -1,6 +1,7 @@
 package is.hi.hbv601g.jollytime.Activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -161,17 +162,31 @@ public class BookADateFragment extends Fragment {
                         temp.thenAccept(lists -> {
                             findFreeTime(lists, bookDateService);
                         });
-                        try {
-                            temp.get();
-                        } catch (Exception e) {
-                            Log.i("Error", e.getMessage());
+
+                        AsyncTask.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    temp.get();
+                                } catch (Exception e) {
+                                    Log.i("Error", e.getMessage());
+                                }
+                            }
+                        });
+                    });
+
+                    AsyncTask.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                completableEventList.get();
+                            }
+                            catch (Exception e) {
+                                Log.i("Error", e.getMessage());
+                            };
                         }
                     });
-                try {
-                    completableEventList.get();
-                } catch (Exception e) {
-                    Log.i("Error", e.getMessage());
-                };
+
                 } else {
                     Intent intent = new Intent(getActivity(), CalendarActivity.class);
                     startActivity(intent);
@@ -203,7 +218,7 @@ public class BookADateFragment extends Fragment {
 
         for(int i=0; i< lists.size(); i++){
             for(int j=0; j< lists.get(i).size(); j++){
-                freetime = bookDateService.magigFunction(lists.get(i).get(j), freetime);
+                freetime = bookDateService.magigFunction(lists.get(i).get(j));
 
             }
         }
