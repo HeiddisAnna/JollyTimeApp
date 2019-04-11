@@ -1,11 +1,14 @@
 package is.hi.hbv601g.jollytime.Activities;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -17,20 +20,32 @@ import is.hi.hbv601g.jollytime.FirebaseServices.EventDatabaseService;
 import is.hi.hbv601g.jollytime.Models.Date;
 import is.hi.hbv601g.jollytime.Models.Event;
 
+import static android.widget.TextView.*;
+
 public class DayActivity extends AppCompatActivity implements EventDatabaseService.EventDatabaseServiceDelegate {
 
     private EventDatabaseService eventDatabaseService;
-    TextView dateTextView;
+    private TextView dateTextView;
     TextView yearTextView;
+    RelativeLayout mLayout;
+    LinearLayout linearLayout;
 
-    String date = getIntent().getStringExtra("date");
-    String year = getIntent().getStringExtra("year");
-    String selectedDateInMillis = getIntent().getStringExtra("selectedDateInMillis");
+    String date = null;
+    String year = null;
+    String selectedDateInMillis = null;
+    private int eventIndex;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_day);
+
+        this.date = getIntent().getStringExtra("date");
+        this.year = getIntent().getStringExtra("year");
+        this.selectedDateInMillis = getIntent().getStringExtra("selectedDateInMillis");
+
+        mLayout = (RelativeLayout)findViewById(R.id.left_event_column);
+        eventIndex = mLayout.getChildCount();
 
         dateTextView = findViewById(R.id.date_DayTextView);
         yearTextView = findViewById(R.id.year_dayTextView);
@@ -55,7 +70,7 @@ public class DayActivity extends AppCompatActivity implements EventDatabaseServi
         this.eventDatabaseService.getUserEvents();
     }
 
-    /*public boolean isEventOnDate(Event event) {
+    public boolean isEventOnDate(Event event) {
         long selectedDate = Long.parseLong(selectedDateInMillis);
 
         long eventStartDate = Long.parseLong(event.getStartDate());
@@ -71,8 +86,8 @@ public class DayActivity extends AppCompatActivity implements EventDatabaseServi
 
         // Get year, month and day of month to compare dates
         int yearCurrent = currentCal.get(Calendar.YEAR);
-        int monthCurrent = currentCal.get(Calendar.MONTH);
-        int dayCurrent = currentCal.get(Calendar.DAY_OF_MONTH);
+        int monthCurrent = currentCal.get(Calendar.MONTH)-1;
+        int dayCurrent = currentCal.get(Calendar.DAY_OF_MONTH)-1;
 
         int yearEvent = eventStartcal.get(Calendar.YEAR);
         int monthEvent = eventStartcal.get(Calendar.MONTH);
@@ -81,12 +96,10 @@ public class DayActivity extends AppCompatActivity implements EventDatabaseServi
 
         if (yearCurrent == yearEvent && monthCurrent == monthEvent && dayCurrent == dayEvent) {
             sameDay = true;
-        } else {
-            sameDay = false;
         }
 
         return sameDay;
-    }*/
+    }
 
     public int getTimeFrame(String startDate, String endDate) {
         long startTimeLong = Long.parseLong(startDate);
@@ -103,15 +116,54 @@ public class DayActivity extends AppCompatActivity implements EventDatabaseServi
         return timeFrame;
     }
 
+    private void createEventView(int topMargin, int height, String message){
+        TextView mEventView = new TextView(DayActivity.this);
+        RelativeLayout.LayoutParams lParam = new RelativeLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        lParam.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+        lParam.topMargin = topMargin * 2;
+        lParam.leftMargin = 24;
+        mEventView.setLayoutParams(lParam);
+        mEventView.setPadding(24, 0, 24, 0);
+        mEventView.setHeight(height * 2);
+        mEventView.setGravity(0x11);
+        mEventView.setTextColor(Color.parseColor("#ffffff"));
+        mEventView.setText(message);
+        mEventView.setBackgroundColor(Color.parseColor("#ffd149"));
+        mLayout.addView(mEventView, eventIndex - 1);
+    }
+
     @Override
     public void updateEvent(Event event) {
-        TextView seven = findViewById(R.id.seven);
-        //if (isEventOnDate(event)) {
+        Calendar calStart = Calendar.getInstance();
+        Calendar calEnd = Calendar.getInstance();
+
+        calStart.setTimeInMillis(Long.parseLong(event.getStartDate()));
+        calEnd.setTimeInMillis(Long.parseLong(event.getEndDate()));
+
+        // Get year, month and day of month to compare dates
+        int yearStart = calStart.get(Calendar.YEAR);
+        int monthStart = calStart.get(Calendar.MONTH);
+        int dayStart = calStart.get(Calendar.DAY_OF_MONTH);
+        int hourStart = calStart.get(Calendar.HOUR);
+        int minStart = calStart.get(Calendar.MINUTE);
+
+        int yearEnd = calEnd.get(Calendar.YEAR);
+        int monthEnd = calEnd.get(Calendar.MONTH);
+        int dayEnd = calEnd.get(Calendar.DAY_OF_MONTH);
+        int hourEnd = calEnd.get(Calendar.HOUR);
+        int minEnd = calEnd.get(Calendar.MINUTE);
+
+        if (isEventOnDate(event)) {
             // TODO: implement
             String titleEvent = event.getTitle();
             String startDate = event.getStartDate();
-            seven.setText(titleEvent + startDate);
-        //}
+            String endDate = event.getEndDate();
+            int timeframe = getTimeFrame(startDate, endDate);
+
+            createEventView(timeframe, timeframe, titleEvent);
+
+
+        }
 
     }
 }

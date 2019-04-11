@@ -45,7 +45,7 @@ public class EventDatabaseService {
 
     public void getUserEvents() {
 
-        String userId = authenticationService.getCurrentUserId();
+        final String userId = authenticationService.getCurrentUserId();
         final EventDatabaseServiceDelegate delegate = this.delegate;
 
 
@@ -58,9 +58,15 @@ public class EventDatabaseService {
                     mDatabase.child(eventsID).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Event event = new Event(dataSnapshot.child("title").getValue(String.class), dataSnapshot.child("description").getValue(String.class),
-                                    dataSnapshot.child("startDate").getValue(String.class), dataSnapshot.child("endDate").getValue(String.class),
-                                    dataSnapshot.child("userID").getValue(String.class));
+                            Event event = dataSnapshot.getValue(Event.class);
+                            /*
+                            String title = dataSnapshot.child("title").getValue(String.class);
+                            String description = dataSnapshot.child("description").getValue(String.class);
+                            String startDate = dataSnapshot.child("startDate").getValue(String.class);
+                            String endDate = dataSnapshot.child("endDate").getValue(String.class);
+                            String userID = dataSnapshot.child("userID").getValue(String.class);
+                            Event event = new Event(title, description, startDate, endDate, userID);
+                            */
                             delegate.updateEvent(event);
                         }
 

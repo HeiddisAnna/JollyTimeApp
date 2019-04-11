@@ -1,7 +1,5 @@
 package is.hi.hbv601g.jollytime.Models;
-import android.support.annotation.IdRes;
 
-import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.io.Serializable;
 

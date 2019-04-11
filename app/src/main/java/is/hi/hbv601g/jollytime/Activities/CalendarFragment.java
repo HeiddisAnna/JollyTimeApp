@@ -16,8 +16,12 @@ import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
 import org.threeten.bp.DayOfWeek;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.format.DateTimeFormatter;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import is.hi.hbv601g.jollytime.Decorators.CurrentDayDecorator;
 import is.hi.hbv601g.jollytime.Decorators.EventDecorator;
@@ -110,6 +114,9 @@ public class CalendarFragment extends Fragment implements EventDatabaseService.E
     @Override
     public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
 
+    MaterialCalendarView calendarView;
+    Calendar calendar = Calendar.getInstance();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -118,34 +125,25 @@ public class CalendarFragment extends Fragment implements EventDatabaseService.E
         View v = inflater.inflate(R.layout.fragment_calendar, container, false);
 
         // Calendars
-        MaterialCalendarView calendarView;
         calendarView = v.findViewById(R.id.calendarView);
-        Calendar cal = Calendar.getInstance();
 
         // Decorators
-        calendarView.addDecorators(new EventDecorator((CalendarActivity) getActivity()));
+        //calendarView.addDecorators(new EventDecorator( getActivity()));
         calendarView.addDecorator(new CurrentDayDecorator((CalendarActivity) getActivity()));
 
         // Layouts from xml
-        goToDay_button = v.findViewById(R.id.go_to_date_button);
-        goToDay_button.setVisibility(Button.VISIBLE);
         final TextView yearText = v.findViewById(R.id.year_textView);
         final TextView dateText = v.findViewById(R.id.date_textView);
         addEvents_button = v.findViewById(R.id.addevents_button);
-        addEvents_button.setVisibility(Button.VISIBLE);
 
-        // get date from cal
-        int month = cal.get(Calendar.MONTH);
-        int year = cal.get(Calendar.YEAR);
-        int dayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
-        int hour = cal.get(Calendar.HOUR);
-        int minutes = cal.get(Calendar.MINUTE);
+        int year = calendar.get(Calendar.YEAR);
+        final int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
 
         String dayOfWeek;
         String monthText;
         final String yearString = String.valueOf(year);
-        dayOfWeek = getDayOfWeek(cal.get(Calendar.DAY_OF_WEEK));
-        monthText = getMonth(cal.get(Calendar.MONTH));
+        dayOfWeek = getDayOfWeek(calendar.get(Calendar.DAY_OF_WEEK));
+        monthText = getMonth(calendar.get(Calendar.MONTH));
 
         // Initialize material calendarView
         calendarView.state().edit()
@@ -160,41 +158,35 @@ public class CalendarFragment extends Fragment implements EventDatabaseService.E
         yearText.setText(yearString);
         dateText.setText(selectedDate);
 
-        // Calendar selectedCalendarDate = Calendar.getInstance();
-        // selectedCalendarDate.set(year, month, dayOfMonth, hour, minutes);
-        // final String selectedDateInMillis = String.valueOf(selectedCalendarDate.getTimeInMillis());
 
         calendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
             public void onDateSelected(@NonNull MaterialCalendarView materialCalendarView, @NonNull CalendarDay calendarDay, boolean b) {
-                Calendar calendar = Calendar.getInstance();
 
-                int year = calendarDay.getYear();
-                int month = calendarDay.getMonth();
-                int dayOfMonth = calendarDay.getDay();
+                int yearSelected = calendarDay.getYear();
+                int monthSelected = calendarDay.getMonth();
+                int dayOfMonthSelected = calendarDay.getDay();
 
-                calendar.set(year, month, dayOfMonth);
+                calendar.set(yearSelected, monthSelected, dayOfMonthSelected);
 
-                String monthName = getMonth(month);
+                String monthName = getMonth(monthSelected);
                 String dayOfWeek = getDayOfWeek(calendar.get(Calendar.DAY_OF_WEEK));
 
 
-                String date = String.format("%s, %s %s", dayOfWeek.substring(0, 3), monthName.substring(0, 3), String.valueOf(dayOfMonth));
-                String yearString = Integer.toString(year);
+                final String date = String.format("%s, %s %s", dayOfWeek.substring(0, 3), monthName.substring(0, 3), String.valueOf(dayOfMonthSelected));
+                final String yearString = Integer.toString(yearSelected);
+
+                String selectedDateInMillis = String.valueOf(calendar.getTimeInMillis());
 
                 yearText.setText(yearString);
                 dateText.setText(date);
-            }
-        });
 
-        goToDay_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), DayActivity.class);
-                intent.putExtra("date", selectedDate);
+                intent.putExtra("date", date);
                 intent.putExtra("year", yearString);
-                //intent.putExtra("selectedDateInMillis", selectedDateInMillis);
+                intent.putExtra("selectedDateInMillis", selectedDateInMillis);
                 startActivity(intent);
+
             }
         });
 
@@ -217,5 +209,7 @@ public class CalendarFragment extends Fragment implements EventDatabaseService.E
     @Override
     public void updateEvent(Event event) {
         // TODO: Implement
+        String startDate = event.getStartDate();
+
     }
 }

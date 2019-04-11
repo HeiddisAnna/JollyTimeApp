@@ -158,7 +158,6 @@
                     android:layout_height="wrap_content"
                     android:paddingTop="440dp"
                     android:text="@string/time_7am"
-                    android:id="@+id/seven"
                     android:textColor="@color/colorBlack"
                     android:textStyle="bold" />
                 <View
@@ -403,17 +402,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="60dp"
+                    android:id="@+id/time0"
                     android:background="@color/colorDivider" />
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="120dp"
+                    android:id="@+id/time1"
                     android:background="@color/colorDivider" />
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
+                    android:id="@+id/time2"
                     android:layout_marginTop="180dp"
                     android:background="@color/colorDivider" />
 
@@ -421,131 +423,153 @@
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
                     android:layout_marginTop="240dp"
+                    android:id="@+id/time3"
                     android:background="@color/colorDivider" />
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
+                    android:id="@+id/time4"
                     android:layout_marginTop="300dp"
                     android:background="@color/colorDivider" />
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
+                    android:id="@+id/time5"
                     android:layout_marginTop="360dp"
                     android:background="@color/colorDivider" />
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
+                    android:id="@+id/time6"
                     android:layout_marginTop="420dp"
                     android:background="@color/colorDivider" />
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
+                    android:id="@+id/time7"
                     android:layout_marginTop="480dp"
                     android:background="@color/colorDivider" />
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
+                    android:id="@+id/time8"
                     android:layout_marginTop="540dp"
                     android:background="@color/colorDivider" />
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
+                    android:id="@+id/time9"
                     android:layout_marginTop="600dp"
                     android:background="@color/colorDivider" />
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
+                    android:id="@+id/time10"
                     android:layout_marginTop="660dp"
                     android:background="@color/colorDivider" />
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
+                    android:id="@+id/time11"
                     android:layout_marginTop="720dp"
                     android:background="@color/colorDivider" />
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
+                    android:id="@+id/time12"
                     android:layout_marginTop="780dp"
                     android:background="@color/colorDivider" />
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
+                    android:id="@+id/time13"
                     android:layout_marginTop="840dp"
                     android:background="@color/colorDivider" />
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
+                    android:id="@+id/time14"
                     android:layout_marginTop="900dp"
                     android:background="@color/colorDivider" />
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
+                    android:id="@+id/time15"
                     android:layout_marginTop="960dp"
                     android:background="@color/colorDivider" />
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
+                    android:id="@+id/time16"
                     android:layout_marginTop="1020dp"
                     android:background="@color/colorDivider" />
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
+                    android:id="@+id/time17"
                     android:layout_marginTop="1080dp"
                     android:background="@color/colorDivider" />
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
+                    android:id="@+id/time18"
                     android:layout_marginTop="1140dp"
                     android:background="@color/colorDivider" />
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
+                    android:id="@+id/time19"
                     android:layout_marginTop="1200dp"
                     android:background="@color/colorDivider" />
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
+                    android:id="@+id/time20"
                     android:layout_marginTop="1260dp"
                     android:background="@color/colorDivider" />
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
+                    android:id="@+id/time21"
                     android:layout_marginTop="1320dp"
                     android:background="@color/colorDivider" />
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
+                    android:id="@+id/time22"
                     android:layout_marginTop="1380dp"
                     android:background="@color/colorDivider" />
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
+                    android:id="@+id/time23"
                     android:layout_marginTop="1440dp"
                     android:background="@color/colorDivider" />
 
                 <View
                     android:layout_width="fill_parent"
                     android:layout_height="1dp"
+                    android:id="@+id/time24"
                     android:layout_marginTop="1500dp"
                     android:background="@color/colorDivider" />
             </RelativeLayout>
