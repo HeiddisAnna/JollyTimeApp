@@ -1,9 +1,11 @@
 package is.hi.hbv601g.jollytime.Activities;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,12 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
+
+import is.hi.hbv601g.jollytime.Models.Date;
+import is.hi.hbv601g.jollytime.Models.Tuple;
+import is.hi.hbv601g.jollytime.Services.AsyncUtils;
 import is.hi.hbv601g.jollytime.Services.BookDateService;
 import is.hi.hbv601g.jollytime.Activities.SelectDateFragment;
 import is.hi.hbv601g.jollytime.Activities.SelectTimeFragment;
@@ -43,6 +51,8 @@ public class BookADateFragment extends Fragment {
     DialogFragment startTimeFragment;
     DialogFragment endDateFragment;
     DialogFragment endTimeFragment;
+    Timestamp startTimePeriod;
+    Timestamp endTimePeriod;
 
 
     public BookADateFragment() {
@@ -110,6 +120,8 @@ public class BookADateFragment extends Fragment {
             }
         });
 
+        BookADateFragment thisFragment = this;
+
 
         mBookDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -135,23 +147,51 @@ public class BookADateFragment extends Fragment {
                 int endHour = ((SelectTimeFragment) endTimeFragment).getHour();
                 int endMin = ((SelectTimeFragment) endTimeFragment).getMin();
 
-                Timestamp startTimePeriod = new Timestamp(startYear, startMonth, startDay, startHour, startMin, 0 ,0);
-                Timestamp endTimePeriod = new Timestamp(endYear, endMonth, endDay, endHour, endMin, 0, 0);
+                startTimePeriod = new Timestamp(startYear-1900, startMonth, startDay, startHour, startMin, 0 ,0);
+                endTimePeriod = new Timestamp(startYear-1900, endMonth, endDay, endHour, endMin, 0, 0);
 
 
                 List<String> usersID = new ArrayList<String>();
-                usersID.add("EAUUrzlCqFO5KbS8jP8dJnqAhVG2");
-                usersID.add("aTd5KoHabeUZIyp3pcx9yNpqNTE3");
+                usersID.add("1T09ujju4SU0GlfHgwgjD45vqpp1");
+                usersID.add("BEdYO9QpOFhDRZz16DKbdFS9HWj1");
 
                 BookDateService bookDateService = new BookDateService(startTimePeriod, endTimePeriod, usersID, 180);
 
                 if(bookDateService.rightDate()) {
-                    bookDateService.findCommonTimeperiod();
-                    Intent intent = new Intent(getActivity(), CalendarActivity.class);
-                    startActivity(intent);
+                    CompletableFuture<List<List<String>>> completableEventList = bookDateService.findEventsIDList();
+                    completableEventList.thenAccept(eventIDs -> {
+                        CompletableFuture<List<List<Tuple<String, String>>>> temp = thisFragment.getEventList(eventIDs, usersID, bookDateService);
+                        temp.thenAccept(lists -> {
+                            findFreeTime(lists, bookDateService);
+                        });
+
+                        AsyncTask.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    temp.get();
+                                } catch (Exception e) {
+                                    Log.i("Error", e.getMessage());
+                                }
+                            }
+                        });
+                    });
+
+                    AsyncTask.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                completableEventList.get();
+                            }
+                            catch (Exception e) {
+                                Log.i("Error", e.getMessage());
+                            };
+                        }
+                    });
 
                 } else {
-                    startAfterEnd();
+                    Intent intent = new Intent(getActivity(), CalendarActivity.class);
+                    startActivity(intent);
                 }
             }
         });
@@ -159,9 +199,58 @@ public class BookADateFragment extends Fragment {
         return v;
     }
 
-    public void startAfterEnd() {
+
+    public CompletableFuture<List<List<Tuple<String, String>>>> getEventList(List<List<String>> list, List<String> userID, BookDateService bookDateService){
+
+        List<CompletableFuture<List<Tuple<String, String>>>> completableList = new ArrayList<>();
+
+        for(int i=0; i<list.size(); i++){
+            String userid = userID.get(i);
+            List<String> eventIDsForUser = list.get(i);
+
+            CompletableFuture<List<Tuple<String, String>>> completableEvents = bookDateService.getEvents(eventIDsForUser);
+            completableList.add(completableEvents);
+        }
+        return AsyncUtils.sequenceFuture(completableList);
+    }
+
+    public void findFreeTime( List<List<Tuple<String, String>>> lists, BookDateService bookDateService) {
+
+        List<Date> freetime = new ArrayList<>();
+        Date timePeriod = new Date(startTimePeriod, endTimePeriod);
+        freetime.add(timePeriod);
+
+        for(int i=0; i< lists.size(); i++){
+            for(int j=0; j< lists.get(i).size(); j++){
+                freetime = bookDateService.magigFunction(lists.get(i).get(j), freetime);
+
+            }
+        }
+
+        List<Date> temp = freetime;
+
+        Intent intent = new Intent(getActivity(), DatesActivity.class);
+
+        for(int i=0; i<temp.size(); i++){
+            String startKey= "startKey" + i;
+            Timestamp st = temp.get(i).getStartTime();
+            String thisStartTime = st.toString();
+            intent.putExtra(startKey, thisStartTime);
+
+            String endKey= "endKey" + i;
+            intent.putExtra(endKey, temp.get(i).getEndTime().toString());
+        }
+
+        startActivity(intent);
+
+
+
+
+
+
 
     }
+
 
 }
 
