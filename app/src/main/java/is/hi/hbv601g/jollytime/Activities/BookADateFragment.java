@@ -51,6 +51,8 @@ public class BookADateFragment extends Fragment {
     DialogFragment startTimeFragment;
     DialogFragment endDateFragment;
     DialogFragment endTimeFragment;
+    Timestamp startTimePeriod;
+    Timestamp endTimePeriod;
 
 
     public BookADateFragment() {
@@ -145,8 +147,8 @@ public class BookADateFragment extends Fragment {
                 int endHour = ((SelectTimeFragment) endTimeFragment).getHour();
                 int endMin = ((SelectTimeFragment) endTimeFragment).getMin();
 
-                Timestamp startTimePeriod = new Timestamp(startYear, startMonth, startDay, startHour, startMin, 0 ,0);
-                Timestamp endTimePeriod = new Timestamp(endYear, endMonth, endDay, endHour, endMin, 0, 0);
+                startTimePeriod = new Timestamp(startYear-1900, startMonth, startDay, startHour, startMin, 0 ,0);
+                endTimePeriod = new Timestamp(startYear-1900, endMonth, endDay, endHour, endMin, 0, 0);
 
 
                 List<String> usersID = new ArrayList<String>();
@@ -215,10 +217,12 @@ public class BookADateFragment extends Fragment {
     public void findFreeTime( List<List<Tuple<String, String>>> lists, BookDateService bookDateService) {
 
         List<Date> freetime = new ArrayList<>();
+        Date timePeriod = new Date(startTimePeriod, endTimePeriod);
+        freetime.add(timePeriod);
 
         for(int i=0; i< lists.size(); i++){
             for(int j=0; j< lists.get(i).size(); j++){
-                freetime = bookDateService.magigFunction(lists.get(i).get(j));
+                freetime = bookDateService.magigFunction(lists.get(i).get(j), freetime);
 
             }
         }
@@ -226,7 +230,23 @@ public class BookADateFragment extends Fragment {
         List<Date> temp = freetime;
 
         Intent intent = new Intent(getActivity(), DatesActivity.class);
+
+        for(int i=0; i<temp.size(); i++){
+            String startKey= "startKey" + i;
+            Timestamp st = temp.get(i).getStartTime();
+            String thisStartTime = st.toString();
+            intent.putExtra(startKey, thisStartTime);
+
+            String endKey= "endKey" + i;
+            intent.putExtra(endKey, temp.get(i).getEndTime().toString());
+        }
+
         startActivity(intent);
+
+
+
+
+
 
 
     }

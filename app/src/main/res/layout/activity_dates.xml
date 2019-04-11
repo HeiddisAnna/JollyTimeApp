@@ -52,17 +52,79 @@
         tools:layout_editor_absoluteX="137dp"
         tools:layout_editor_absoluteY="0dp">
 
-    <Button
-        android:id="@+id/goToCalendar"
-        android:layout_marginTop="170dp"
-        android:layout_marginLeft="60dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Go to calendar"
-        tools:layout_editor_absoluteX="161dp"
-        tools:layout_editor_absoluteY="325dp" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="150dp"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/goToCalendar"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="60dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Go to calendar"
+                tools:layout_editor_absoluteX="161dp"
+                tools:layout_editor_absoluteY="325dp" />
+
+            <TextView
+                android:id="@+id/datesList0"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
+            <TextView
+                android:id="@+id/datesList1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
+            <TextView
+                android:id="@+id/datesList2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp" />
+            <TextView
+                android:id="@+id/datesList3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"/>
+            <TextView
+                android:id="@+id/datesList4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"/>
+            <TextView
+                android:id="@+id/datesList5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"/>
+            <TextView
+                android:id="@+id/datesList6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"/>
+            <TextView
+                android:id="@+id/datesList7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"/>
+            <TextView
+                android:id="@+id/datesList8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"/>
+            <TextView
+                android:id="@+id/datesList9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"/>
+
+        </LinearLayout>
+
+
 
     </ScrollView>
+
 
 
 </android.support.constraint.ConstraintLayout>

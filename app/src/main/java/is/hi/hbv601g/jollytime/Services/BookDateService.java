@@ -34,7 +34,6 @@ public class BookDateService {
     private List<String> usersID;
     private DatabaseReference mDatabase;
     private DatabaseReference mEventDatabase;
-    private List<Date> freetime;
     private Fragment BookADateFragment;
 
 
@@ -46,10 +45,6 @@ public class BookDateService {
         this.mDatabase = FirebaseDatabase.getInstance().getReference("users");
         this.mEventDatabase = FirebaseDatabase.getInstance().getReference("events");
         this.timeLength = timeLength;
-
-        this.freetime = new ArrayList<Date>();
-        Date firstFree = new Date(startTimePeriod, endTimePeriod);
-        freetime.add(firstFree);
     }
 
     public CompletableFuture<List<List<String>>> findEventsIDList() {
@@ -137,7 +132,7 @@ public class BookDateService {
     }
 
 
-    public List<Date> magigFunction(Tuple<String, String> event) {
+    public List<Date> magigFunction(Tuple<String, String> event, List<Date> freetime) {
         List<Date> timeperiod = freetime;
 
         Timestamp startTime = new Timestamp(Long.parseLong(event.x));
@@ -150,14 +145,17 @@ public class BookDateService {
             Timestamp startPeriod = timeperiod.get(i).getStartTime();
             Timestamp endPeriod = timeperiod.get(i).getEndTime();
 
-            if(endTime.before(startPeriod) || endPeriod.before(startTime)) {
+            Boolean test1 = endTime.before(startPeriod);
+            Boolean test2 = endPeriod.before(startTime);
+
+            if(endTime.before(startPeriod) || endPeriod.before(startTime) || endPeriod.equals(startTime) || endTime.equals(startPeriod)) {
                 result.add(timeperiod.get(i));
             } else {
                 if(startPeriod.after(startTime) && startPeriod.before(endTime)) {
-                    result.add(new Date(endTime, endPeriod));
+                    result.add(new Date(startPeriod, endTime));
                 } else {
-                    if(startPeriod.after(endTime)) {
-                        result.add(new Date(startPeriod, endPeriod));
+                    if(startTime.before(startPeriod) && endPeriod.before(endTime)) {
+                        // Fer ekkert á listann
                     } else {
                         if (endPeriod.before(endTime)) {
                             result.add(new Date(startPeriod, startTime));
