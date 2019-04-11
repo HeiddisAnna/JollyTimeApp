@@ -13,12 +13,18 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Future;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 import is.hi.hbv601g.jollytime.Activities.BookADateFragment;
 import is.hi.hbv601g.jollytime.Models.Date;
+import is.hi.hbv601g.jollytime.Models.Event;
+import is.hi.hbv601g.jollytime.Models.Tuple;
 
 public class BookDateService {
 
@@ -28,7 +34,6 @@ public class BookDateService {
     private List<String> usersID;
     private DatabaseReference mDatabase;
     private DatabaseReference mEventDatabase;
-    private List<String> eventsID;
     private List<Date> freetime;
     private Fragment BookADateFragment;
 
@@ -40,7 +45,6 @@ public class BookDateService {
         this.usersID = usersID;
         this.mDatabase = FirebaseDatabase.getInstance().getReference("users");
         this.mEventDatabase = FirebaseDatabase.getInstance().getReference("events");
-        this.eventsID = new ArrayList<>();
         this.timeLength = timeLength;
 
         this.freetime = new ArrayList<Date>();
@@ -48,10 +52,27 @@ public class BookDateService {
         freetime.add(firstFree);
     }
 
-    public void findCommonTimeperiod() {
+    public CompletableFuture<List<List<String>>> findEventsIDList() {
+        List<CompletableFuture<List<String>>> completableList = new ArrayList<>();
+
         for(int i=0; i< usersID.size(); i++) {
-            dateHelper(usersID.get(i));
+            CompletableFuture<List<String>> eventCompletable= dateHelper(usersID.get(i));
+            completableList.add(eventCompletable);
         }
+
+        return AsyncUtils.sequenceFuture(completableList);
+    }
+
+
+    public CompletableFuture<List<Tuple<String, String>>> getEvents(List<String> eventsID) {
+        List<CompletableFuture<Tuple<String, String>>> completableList = new ArrayList<>();
+
+        for(int i=0; i< eventsID.size(); i++) {
+            CompletableFuture<Tuple<String, String>> eventCompletable= getStartAndEndDay(eventsID.get(i));
+            completableList.add(eventCompletable);
+        }
+
+        return AsyncUtils.sequenceFuture(completableList);
     }
 
 
@@ -60,49 +81,51 @@ public class BookDateService {
         return endTimePeriod.after(startTimePeriod);
     }
 
-    public void dateHelper(String id) {
+
+
+
+    public CompletableFuture<List<String>> dateHelper(String id) {
+        final CompletableFuture<List<String>>  completableFuture = new CompletableFuture<>();
+
         mDatabase.child(usersID.get(0)).child("eventsID").addValueEventListener(new ValueEventListener() {
             @Override
 
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                List<String> eventsID = new ArrayList<>();
+
                 for(DataSnapshot userDataSnapshot: dataSnapshot.getChildren()) {
                     String id = userDataSnapshot.getKey();
                     eventsID.add(id);
                 }
-                findFreetime();
+                completableFuture.complete(eventsID);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
+                completableFuture.cancel(true);
             }
 
         });
-    }
-
-    public void findFreetime() {
-        int size = eventsID.size();
-
-        for(int j= 0; j<eventsID.size(); j++){
-            String event = eventsID.get(j);
-            getEventStartDay(eventsID.get(j));
-        }
-        int i = 0;
+        return completableFuture;
     }
 
 
-    public void getEventStartDay(final String eventID) {
-        mEventDatabase.child(eventID).child("startDate").addValueEventListener(new ValueEventListener() {
+
+
+    public CompletableFuture<Tuple<String, String>> getStartAndEndDay(String eventID) {
+
+        final CompletableFuture<Tuple<String, String>>  completableFuture = new CompletableFuture<>();
+
+        mEventDatabase.child(eventID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
 
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                String startDate = dataSnapshot.child("startDate").getValue(String.class);
+                String endDate = dataSnapshot.child("endDate").getValue(String.class);
 
-                for(DataSnapshot userDataSnapshot: dataSnapshot.getChildren()) {
-                    String startTime = userDataSnapshot.getKey();
-                    String thisEvent = eventID;
-                    getEventEndDay(thisEvent, startTime);
-                }
-
+                Tuple<String, String> eventDays = new Tuple<>(startDate, endDate);
+                completableFuture.complete(eventDays);
             }
 
             @Override
@@ -110,41 +133,15 @@ public class BookDateService {
             }
 
         });
+        return completableFuture;
     }
 
 
-    public void getEventEndDay(final String eventID, final String startTime) {
-        mEventDatabase.child(eventID).child("endDate").addValueEventListener(new ValueEventListener() {
-            @Override
-
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for(DataSnapshot userDataSnapshot: dataSnapshot.getChildren()) {
-                    String endTime = userDataSnapshot.getKey();
-                    String thisEventID = eventID;
-                    String thisStartTime = startTime;
-
-                    magigFunction( thisEventID, thisStartTime, endTime);
-
-                }
-                findFreetime();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-
-        });
-    }
-
-
-    public void magigFunction(String eventID, String mStartTime, String mEndTime) {
+    public List<Date> magigFunction(Tuple<String, String> event, List<Date> freetime ) {
         List<Date> timeperiod = freetime;
-        freetime.clear();
 
-        Timestamp startTime = new Timestamp(Long.parseLong(mStartTime));
-
-        Timestamp endTime = new Timestamp(Long.parseLong(mEndTime));
+        Timestamp startTime = new Timestamp(Long.parseLong(event.x));
+        Timestamp endTime = new Timestamp(Long.parseLong(event.y));
 
         List<Date> result = new ArrayList<Date>();
 
@@ -173,6 +170,6 @@ public class BookDateService {
             }
         }
         freetime = result;
-
+        return freetime;
     }
 }

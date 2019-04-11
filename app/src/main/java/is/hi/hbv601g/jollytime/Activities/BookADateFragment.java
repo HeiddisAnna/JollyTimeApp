@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,7 +20,11 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
+import is.hi.hbv601g.jollytime.Models.Date;
+import is.hi.hbv601g.jollytime.Models.Tuple;
+import is.hi.hbv601g.jollytime.Services.AsyncUtils;
 import is.hi.hbv601g.jollytime.Services.BookDateService;
 import is.hi.hbv601g.jollytime.Activities.SelectDateFragment;
 import is.hi.hbv601g.jollytime.Activities.SelectTimeFragment;
@@ -112,6 +117,8 @@ public class BookADateFragment extends Fragment {
             }
         });
 
+        BookADateFragment thisFragment = this;
+
 
         mBookDateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -148,9 +155,23 @@ public class BookADateFragment extends Fragment {
                 BookDateService bookDateService = new BookDateService(startTimePeriod, endTimePeriod, usersID, 180);
 
                 if(bookDateService.rightDate()) {
-                    bookDateService.findCommonTimeperiod();
-                    Intent intent = new Intent(getActivity(), DatesActivity.class);
-                    startActivity(intent);
+                    CompletableFuture<List<List<String>>> completableEventList = bookDateService.findEventsIDList();
+                    completableEventList.thenAccept(eventIDs -> {
+                        CompletableFuture<List<List<Tuple<String, String>>>> temp = thisFragment.getEventList(eventIDs, usersID, bookDateService);
+                        temp.thenAccept(lists -> {
+                            findFreeTime(lists, bookDateService);
+                        });
+                        try {
+                            temp.get();
+                        } catch (Exception e) {
+                            Log.i("Error", e.getMessage());
+                        }
+                    });
+                try {
+                    completableEventList.get();
+                } catch (Exception e) {
+                    Log.i("Error", e.getMessage());
+                };
                 } else {
                     Intent intent = new Intent(getActivity(), CalendarActivity.class);
                     startActivity(intent);
@@ -160,5 +181,41 @@ public class BookADateFragment extends Fragment {
 
         return v;
     }
+
+
+    public CompletableFuture<List<List<Tuple<String, String>>>> getEventList(List<List<String>> list, List<String> userID, BookDateService bookDateService){
+
+        List<CompletableFuture<List<Tuple<String, String>>>> completableList = new ArrayList<>();
+
+        for(int i=0; i<list.size(); i++){
+            String userid = userID.get(i);
+            List<String> eventIDsForUser = list.get(i);
+
+            CompletableFuture<List<Tuple<String, String>>> completableEvents = bookDateService.getEvents(eventIDsForUser);
+            completableList.add(completableEvents);
+        }
+        return AsyncUtils.sequenceFuture(completableList);
+    }
+
+    public void findFreeTime( List<List<Tuple<String, String>>> lists, BookDateService bookDateService) {
+
+        List<Date> freetime = new ArrayList<>();
+
+        for(int i=0; i< lists.size(); i++){
+            for(int j=0; j< lists.get(i).size(); j++){
+                freetime = bookDateService.magigFunction(lists.get(i).get(j), freetime);
+
+            }
+        }
+
+        List<Date> temp = freetime;
+
+        Intent intent = new Intent(getActivity(), DatesActivity.class);
+        startActivity(intent);
+
+
+    }
+
+
 }
 
