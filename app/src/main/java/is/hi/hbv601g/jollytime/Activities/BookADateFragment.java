@@ -18,6 +18,8 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
+import java.util.concurrent.CompletableFuture;
+
 import is.hi.hbv601g.jollytime.Services.BookDateService;
 import is.hi.hbv601g.jollytime.Activities.SelectDateFragment;
 import is.hi.hbv601g.jollytime.Activities.SelectTimeFragment;
@@ -140,28 +142,23 @@ public class BookADateFragment extends Fragment {
 
 
                 List<String> usersID = new ArrayList<String>();
-                usersID.add("EAUUrzlCqFO5KbS8jP8dJnqAhVG2");
-                usersID.add("aTd5KoHabeUZIyp3pcx9yNpqNTE3");
+                usersID.add("1T09ujju4SU0GlfHgwgjD45vqpp1");
+                usersID.add("BEdYO9QpOFhDRZz16DKbdFS9HWj1");
 
                 BookDateService bookDateService = new BookDateService(startTimePeriod, endTimePeriod, usersID, 180);
 
                 if(bookDateService.rightDate()) {
                     bookDateService.findCommonTimeperiod();
+                    Intent intent = new Intent(getActivity(), DatesActivity.class);
+                    startActivity(intent);
+                } else {
                     Intent intent = new Intent(getActivity(), CalendarActivity.class);
                     startActivity(intent);
-
-                } else {
-                    startAfterEnd();
                 }
             }
         });
 
         return v;
     }
-
-    public void startAfterEnd() {
-
-    }
-
 }
 

@@ -1,6 +1,7 @@
 package is.hi.hbv601g.jollytime.Services;
 
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -16,6 +17,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import is.hi.hbv601g.jollytime.Activities.BookADateFragment;
 import is.hi.hbv601g.jollytime.Models.Date;
 
 public class BookDateService {
@@ -28,6 +30,7 @@ public class BookDateService {
     private DatabaseReference mEventDatabase;
     private List<String> eventsID;
     private List<Date> freetime;
+    private Fragment BookADateFragment;
 
 
     public BookDateService(Timestamp startTimePeriod, Timestamp endTimePeriod, List<String> usersID, int timeLength) {
@@ -75,7 +78,6 @@ public class BookDateService {
             }
 
         });
-
     }
 
     public void findFreetime() {
@@ -83,19 +85,65 @@ public class BookDateService {
 
         for(int j= 0; j<eventsID.size(); j++){
             String event = eventsID.get(j);
-            magigFunction(eventsID.get(j));
+            getEventStartDay(eventsID.get(j));
         }
         int i = 0;
     }
 
-    public void magigFunction(String eventID) {
+
+    public void getEventStartDay(final String eventID) {
+        mEventDatabase.child(eventID).child("startDate").addValueEventListener(new ValueEventListener() {
+            @Override
+
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot userDataSnapshot: dataSnapshot.getChildren()) {
+                    String startTime = userDataSnapshot.getKey();
+                    String thisEvent = eventID;
+                    getEventEndDay(thisEvent, startTime);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+
+        });
+    }
+
+
+    public void getEventEndDay(final String eventID, final String startTime) {
+        mEventDatabase.child(eventID).child("endDate").addValueEventListener(new ValueEventListener() {
+            @Override
+
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+
+                for(DataSnapshot userDataSnapshot: dataSnapshot.getChildren()) {
+                    String endTime = userDataSnapshot.getKey();
+                    String thisEventID = eventID;
+                    String thisStartTime = startTime;
+
+                    magigFunction( thisEventID, thisStartTime, endTime);
+
+                }
+                findFreetime();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+
+        });
+    }
+
+
+    public void magigFunction(String eventID, String mStartTime, String mEndTime) {
         List<Date> timeperiod = freetime;
         freetime.clear();
 
-        String mStartTime = mDatabase.child(eventID).child("startDate").getKey();
         Timestamp startTime = new Timestamp(Long.parseLong(mStartTime));
 
-        String mEndTime = mDatabase.child(eventID).child("endDate").getKey();
         Timestamp endTime = new Timestamp(Long.parseLong(mEndTime));
 
         List<Date> result = new ArrayList<Date>();
